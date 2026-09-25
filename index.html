@@ -18,84 +18,72 @@ body{
   font-family:Arial,"Noto Sans Bengali",sans-serif;
   background:#f4f8f7;
   color:#182027;
-  padding-bottom:90px;
+  padding-bottom:82px;
 }
 
-/* ===== HEADER ===== */
-
+/* HEADER */
 .header{
+  height:92px;
   background:#087b80;
-  color:white;
-  min-height:95px;
-  padding:18px 20px;
+  color:#fff;
+  padding:14px 20px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  box-shadow:0 2px 8px rgba(0,0,0,.12);
 }
 
 .header-left{
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:7px;
 }
 
 .title{
-  font-size:23px;
+  font-size:22px;
   font-weight:800;
   white-space:nowrap;
 }
 
 .core{
-  font-size:12px;
+  font-size:11px;
   font-weight:700;
-  opacity:.95;
 }
 
 .header-actions{
   display:flex;
-  gap:10px;
+  gap:8px;
 }
 
 .header-btn{
-  width:48px;
-  height:48px;
-  border:none;
-  border-radius:12px;
+  width:46px;
+  height:46px;
+  border:0;
+  border-radius:11px;
   background:rgba(255,255,255,.15);
-  color:white;
-  font-size:25px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
+  color:#fff;
+  font-size:24px;
 }
 
-.header-btn:active{
-  transform:scale(.96);
-}
-
-/* ===== GROUP AREA ===== */
-
+/* GROUPS */
 .groups{
   max-width:650px;
-  margin:25px auto;
-  padding:0 18px;
+  margin:17px auto;
+  padding:0 15px;
 }
 
 .group-card{
   width:100%;
-  min-height:112px;
-  background:white;
-  border-radius:22px;
-  margin-bottom:18px;
-  padding:18px 20px;
+  height:96px;
+  background:#fff;
+  border:0;
+  border-radius:18px;
+  margin-bottom:13px;
+  padding:12px 17px;
   display:flex;
   align-items:center;
-  gap:18px;
-  border:none;
+  gap:15px;
   text-align:left;
-  box-shadow:0 7px 20px rgba(0,0,0,.07);
+  box-shadow:0 5px 15px rgba(0,0,0,.065);
   cursor:pointer;
 }
 
@@ -104,101 +92,77 @@ body{
 }
 
 .group-icon{
-  width:70px;
-  height:70px;
-  min-width:70px;
+  width:60px;
+  height:60px;
+  min-width:60px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:34px;
+  font-size:30px;
 }
 
-.icon-all{
-  background:#e7efff;
-}
-
-.icon-pending{
-  background:#fff1c6;
-}
-
-.icon-emergency{
-  background:#ffe1e1;
-}
-
-.icon-delete{
-  background:#eee2ff;
-}
+.icon-all{background:#e6efff;}
+.icon-pending{background:#fff1c5;}
+.icon-emergency{background:#ffe0e0;}
+.icon-delete{background:#eee3ff;}
 
 .group-name{
   flex:1;
-  font-size:21px;
+  font-size:19px;
   font-weight:800;
 }
 
 .count{
-  width:55px;
-  height:55px;
-  min-width:55px;
+  width:48px;
+  height:48px;
+  min-width:48px;
   border-radius:50%;
-  color:white;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:23px;
+  color:#fff;
+  font-size:20px;
   font-weight:800;
 }
 
-.count-all{
-  background:#2879e8;
-}
+.count-all{background:#2879e8;}
+.count-pending{background:#ef9700;}
+.count-emergency{background:#fa4048;}
+.count-delete{background:#7544d8;}
 
-.count-pending{
-  background:#f09a00;
-}
-
-.count-emergency{
-  background:#ff4049;
-}
-
-.count-delete{
-  background:#7542d8;
-}
-
-/* ===== BOTTOM NAV ===== */
-
+/* BOTTOM NAV */
 .bottom-nav{
   position:fixed;
+  bottom:0;
   left:0;
   right:0;
-  bottom:0;
-  height:78px;
-  background:white;
+  height:76px;
+  background:#fff;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   align-items:center;
-  box-shadow:0 -3px 15px rgba(0,0,0,.08);
+  box-shadow:0 -3px 14px rgba(0,0,0,.06);
   z-index:100;
 }
 
 .nav-item{
-  height:65px;
-  border:none;
-  background:white;
+  height:64px;
+  border:0;
+  background:#fff;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
-  gap:3px;
+  align-items:center;
+  gap:2px;
   font-size:13px;
   font-weight:700;
-  color:#5e666b;
-  cursor:pointer;
+  color:#606a6d;
 }
 
 .nav-item.active{
-  margin:6px 12px;
-  border-radius:15px;
+  margin:5px 12px;
+  border-radius:14px;
   background:#e7f6f3;
   color:#087b80;
 }
@@ -207,63 +171,57 @@ body{
   font-size:25px;
 }
 
-/* ===== MOBILE ===== */
-
-@media(max-width:430px){
-
+/* SMALL PHONE */
+@media(max-width:380px){
   .header{
-    min-height:88px;
-    padding:15px 14px;
+    padding:12px 13px;
   }
 
   .title{
-    font-size:20px;
-  }
-
-  .core{
-    font-size:10px;
-  }
-
-  .header-btn{
-    width:43px;
-    height:43px;
-    font-size:22px;
-  }
-
-  .groups{
-    margin-top:20px;
-    padding:0 14px;
-  }
-
-  .group-card{
-    min-height:105px;
-    padding:15px;
-  }
-
-  .group-icon{
-    width:62px;
-    height:62px;
-    min-width:62px;
-    font-size:30px;
-  }
-
-  .group-name{
     font-size:19px;
   }
 
+  .core{
+    font-size:9px;
+  }
+
+  .header-btn{
+    width:41px;
+    height:41px;
+    font-size:21px;
+  }
+
+  .groups{
+    padding:0 12px;
+  }
+
+  .group-card{
+    height:88px;
+    padding:10px 13px;
+  }
+
+  .group-icon{
+    width:54px;
+    height:54px;
+    min-width:54px;
+    font-size:27px;
+  }
+
+  .group-name{
+    font-size:17px;
+  }
+
   .count{
-    width:50px;
-    height:50px;
-    min-width:50px;
-    font-size:20px;
+    width:44px;
+    height:44px;
+    min-width:44px;
+    font-size:18px;
   }
 }
 </style>
 </head>
 
 <body>
-
-<!-- HEADER -->
 
 <header class="header">
 
@@ -274,19 +232,13 @@ body{
 
   <div class="header-actions">
 
-    <button
-      class="header-btn"
-      type="button"
-      onclick="openModule('notifications')"
-      aria-label="Notifications">
+    <button class="header-btn"
+      onclick="openModule('notifications')">
       🔔
     </button>
 
-    <button
-      class="header-btn"
-      type="button"
-      onclick="openModule('summary')"
-      aria-label="Summary">
+    <button class="header-btn"
+      onclick="openModule('summary')">
       📊
     </button>
 
@@ -295,13 +247,9 @@ body{
 </header>
 
 
-<!-- GROUP LIST -->
-
 <main class="groups">
 
-  <button
-    class="group-card"
-    type="button"
+  <button class="group-card"
     onclick="openModule('orders')">
 
     <div class="group-icon icon-all">📦</div>
@@ -310,18 +258,13 @@ body{
       All Order Group
     </div>
 
-    <div
-      class="count count-all"
-      id="allCount">
-      0
-    </div>
+    <div class="count count-all"
+      id="allCount">0</div>
 
   </button>
 
 
-  <button
-    class="group-card"
-    type="button"
+  <button class="group-card"
     onclick="openModule('pending')">
 
     <div class="group-icon icon-pending">🕐</div>
@@ -330,18 +273,13 @@ body{
       Pending Group
     </div>
 
-    <div
-      class="count count-pending"
-      id="pendingCount">
-      0
-    </div>
+    <div class="count count-pending"
+      id="pendingCount">0</div>
 
   </button>
 
 
-  <button
-    class="group-card"
-    type="button"
+  <button class="group-card"
     onclick="openModule('emergency')">
 
     <div class="group-icon icon-emergency">🚨</div>
@@ -350,44 +288,32 @@ body{
       Emergency Group
     </div>
 
-    <div
-      class="count count-emergency"
-      id="emergencyCount">
-      0
-    </div>
+    <div class="count count-emergency"
+      id="emergencyCount">0</div>
 
   </button>
 
 
-  <button
-    class="group-card"
-    type="button"
+  <button class="group-card"
     onclick="openModule('delete')">
 
     <div class="group-icon icon-delete">🗑️</div>
 
     <div class="group-name">
-      Delete Approval
+      Delete Group
     </div>
 
-    <div
-      class="count count-delete"
-      id="deleteCount">
-      0
-    </div>
+    <div class="count count-delete"
+      id="deleteCount">0</div>
 
   </button>
 
 </main>
 
 
-<!-- BOTTOM NAV -->
-
 <nav class="bottom-nav">
 
-  <button
-    class="nav-item active"
-    type="button"
+  <button class="nav-item active"
     onclick="goHome()">
 
     <span class="nav-icon">📦</span>
@@ -396,9 +322,7 @@ body{
   </button>
 
 
-  <button
-    class="nav-item"
-    type="button"
+  <button class="nav-item"
     onclick="openModule('courier')">
 
     <span class="nav-icon">🚚</span>
@@ -407,9 +331,7 @@ body{
   </button>
 
 
-  <button
-    class="nav-item"
-    type="button"
+  <button class="nav-item"
     onclick="openModule('settings')">
 
     <span class="nav-icon">⚙️</span>
@@ -423,49 +345,21 @@ body{
 <script>
 
 /*
-================================================
-ORDER MANAGEMENT 02
-FINAL CORE / HOME
-================================================
-
-HOME = index.html
-
-Other systems remain separate modules.
-This allows one module to be updated without
-changing the other working modules.
+  ORDER MANAGEMENT 02
+  HOME / FINAL CORE
 */
 
-
 const MODULES = {
-
-  orders:
-    "modules/orders.html",
-
-  pending:
-    "modules/pending.html",
-
-  emergency:
-    "modules/emergency.html",
-
-  delete:
-    "modules/delete-approval.html",
-
-  courier:
-    "modules/courier.html",
-
-  settings:
-    "modules/settings.html",
-
-  summary:
-    "modules/summary.html",
-
-  notifications:
-    "modules/notifications.html"
-
+  orders:"modules/orders.html",
+  pending:"modules/pending.html",
+  emergency:"modules/emergency.html",
+  delete:"modules/delete-approval.html",
+  courier:"modules/courier.html",
+  settings:"modules/settings.html",
+  summary:"modules/summary.html",
+  notifications:"modules/notifications.html"
 };
 
-
-/* OPEN MODULE */
 
 function openModule(name){
 
@@ -480,16 +374,17 @@ function openModule(name){
 }
 
 
-/* HOME */
-
 function goHome(){
-  window.location.href = "index.html";
+  window.location.href="index.html";
 }
 
 
-/* UPDATE COUNTS */
+/*
+  Database module পরে এখানকার
+  সংখ্যাগুলো real-time update করবে।
+*/
 
-function setGroupCounts(data = {}){
+function setGroupCounts(data={}){
 
   document.getElementById("allCount").textContent =
     data.all ?? 0;
@@ -505,33 +400,12 @@ function setGroupCounts(data = {}){
 }
 
 
-/*
-Later the Database module will supply
-the real-time counts here.
-
-Example:
-
-setGroupCounts({
-  all: 12,
-  pending: 5,
-  emergency: 2,
-  delete: 1
-});
-
-*/
-
-
 setGroupCounts({
   all:0,
   pending:0,
   emergency:0,
   delete:0
 });
-
-
-console.log(
-  "Order Management 02 - Final Core Ready"
-);
 
 </script>
 
