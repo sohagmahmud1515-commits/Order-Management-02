@@ -2,8 +2,8 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#087b80">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f83">
 
 <title>অর্ডার ম্যানেজমেন্ট</title>
 
@@ -14,19 +14,24 @@
   padding:0;
 }
 
+html,body{
+  min-height:100%;
+}
+
 body{
   font-family:Arial,"Noto Sans Bengali",sans-serif;
   background:#f4f8f7;
-  color:#182027;
-  padding-bottom:82px;
+  color:#17202a;
+  padding-bottom:78px;
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
+
 .header{
-  height:92px;
-  background:#087b80;
-  color:#fff;
-  padding:14px 20px;
+  height:88px;
+  background:#087f83;
+  color:white;
+  padding:12px 18px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -39,14 +44,15 @@ body{
 }
 
 .title{
-  font-size:22px;
+  font-size:21px;
   font-weight:800;
   white-space:nowrap;
 }
 
 .core{
-  font-size:11px;
+  font-size:10px;
   font-weight:700;
+  white-space:nowrap;
 }
 
 .header-actions{
@@ -55,35 +61,48 @@ body{
 }
 
 .header-btn{
-  width:46px;
-  height:46px;
+  width:44px;
+  height:44px;
   border:0;
   border-radius:11px;
   background:rgba(255,255,255,.15);
-  color:#fff;
-  font-size:24px;
+  font-size:23px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
 }
 
-/* GROUPS */
+/* ===== GROUP LIST ===== */
+
 .groups{
   max-width:650px;
-  margin:17px auto;
-  padding:0 15px;
+  margin:16px auto 0;
+  padding:0 14px;
 }
 
 .group-card{
   width:100%;
-  height:96px;
-  background:#fff;
+  height:82px;
+
+  background:white;
+
   border:0;
-  border-radius:18px;
-  margin-bottom:13px;
-  padding:12px 17px;
+  border-radius:17px;
+
+  margin-bottom:11px;
+  padding:10px 14px;
+
   display:flex;
   align-items:center;
-  gap:15px;
+
+  gap:13px;
+
   text-align:left;
-  box-shadow:0 5px 15px rgba(0,0,0,.065);
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.06);
+
   cursor:pointer;
 }
 
@@ -91,94 +110,155 @@ body{
   transform:scale(.985);
 }
 
+/* ICON */
+
 .group-icon{
-  width:60px;
-  height:60px;
-  min-width:60px;
+  width:52px;
+  height:52px;
+  min-width:52px;
+
   border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:30px;
+
+  font-size:27px;
 }
 
-.icon-all{background:#e6efff;}
-.icon-pending{background:#fff1c5;}
-.icon-emergency{background:#ffe0e0;}
-.icon-delete{background:#eee3ff;}
+.icon-all{
+  background:#e5eeff;
+}
+
+.icon-pending{
+  background:#fff0bd;
+}
+
+.icon-emergency{
+  background:#ffdede;
+}
+
+.icon-delete{
+  background:#eee1ff;
+}
+
+/* GROUP NAME */
 
 .group-name{
   flex:1;
-  font-size:19px;
+
+  font-size:18px;
   font-weight:800;
+
+  white-space:nowrap;
 }
 
+/* COUNT */
+
 .count{
-  width:48px;
-  height:48px;
-  min-width:48px;
+  width:43px;
+  height:43px;
+  min-width:43px;
+
   border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#fff;
-  font-size:20px;
+
+  color:white;
+
+  font-size:18px;
   font-weight:800;
 }
 
-.count-all{background:#2879e8;}
-.count-pending{background:#ef9700;}
-.count-emergency{background:#fa4048;}
-.count-delete{background:#7544d8;}
+.count-all{
+  background:#2879e8;
+}
 
-/* BOTTOM NAV */
+.count-pending{
+  background:#ef9700;
+}
+
+.count-emergency{
+  background:#fa4149;
+}
+
+.count-delete{
+  background:#7543d9;
+}
+
+/* ===== BOTTOM NAVIGATION ===== */
+
 .bottom-nav{
   position:fixed;
-  bottom:0;
+
   left:0;
   right:0;
-  height:76px;
-  background:#fff;
+  bottom:0;
+
+  height:74px;
+
+  background:white;
+
   display:grid;
   grid-template-columns:repeat(3,1fr);
+
   align-items:center;
-  box-shadow:0 -3px 14px rgba(0,0,0,.06);
+
+  box-shadow:
+    0 -3px 12px rgba(0,0,0,.06);
+
   z-index:100;
 }
 
 .nav-item{
-  height:64px;
+  height:62px;
+
   border:0;
-  background:#fff;
+  background:white;
+
   display:flex;
   flex-direction:column;
-  justify-content:center;
+
   align-items:center;
+  justify-content:center;
+
   gap:2px;
+
   font-size:13px;
   font-weight:700;
-  color:#606a6d;
+
+  color:#60696c;
+
+  cursor:pointer;
 }
 
 .nav-item.active{
   margin:5px 12px;
+
   border-radius:14px;
-  background:#e7f6f3;
-  color:#087b80;
+
+  background:#e5f5f2;
+
+  color:#087f83;
 }
 
 .nav-icon{
-  font-size:25px;
+  font-size:24px;
 }
 
-/* SMALL PHONE */
+/* ===== SMALL PHONE ===== */
+
 @media(max-width:380px){
+
   .header{
-    padding:12px 13px;
+    height:82px;
+    padding:10px 12px;
   }
 
   .title{
-    font-size:19px;
+    font-size:18px;
   }
 
   .core{
@@ -186,36 +266,39 @@ body{
   }
 
   .header-btn{
-    width:41px;
-    height:41px;
-    font-size:21px;
+    width:39px;
+    height:39px;
+    font-size:20px;
   }
 
   .groups{
-    padding:0 12px;
+    margin-top:13px;
+    padding:0 11px;
   }
 
   .group-card{
-    height:88px;
-    padding:10px 13px;
+    height:76px;
+    margin-bottom:9px;
+    padding:8px 11px;
+    gap:11px;
   }
 
   .group-icon{
-    width:54px;
-    height:54px;
-    min-width:54px;
-    font-size:27px;
+    width:48px;
+    height:48px;
+    min-width:48px;
+    font-size:25px;
   }
 
   .group-name{
-    font-size:17px;
+    font-size:16px;
   }
 
   .count{
-    width:44px;
-    height:44px;
-    min-width:44px;
-    font-size:18px;
+    width:40px;
+    height:40px;
+    min-width:40px;
+    font-size:17px;
   }
 }
 </style>
@@ -223,21 +306,35 @@ body{
 
 <body>
 
+<!-- ===== HEADER ===== -->
+
 <header class="header">
 
   <div class="header-left">
-    <div class="title">অর্ডার ম্যানেজমেন্ট</div>
-    <div class="core">FINAL CORE</div>
+
+    <div class="title">
+      অর্ডার ম্যানেজমেন্ট
+    </div>
+
+    <div class="core">
+      FINAL CORE
+    </div>
+
   </div>
+
 
   <div class="header-actions">
 
-    <button class="header-btn"
+    <button
+      class="header-btn"
+      type="button"
       onclick="openModule('notifications')">
       🔔
     </button>
 
-    <button class="header-btn"
+    <button
+      class="header-btn"
+      type="button"
       onclick="openModule('summary')">
       📊
     </button>
@@ -247,97 +344,162 @@ body{
 </header>
 
 
+<!-- ===== GROUPS ===== -->
+
 <main class="groups">
 
-  <button class="group-card"
+
+  <!-- ALL ORDER -->
+
+  <button
+    class="group-card"
+    type="button"
     onclick="openModule('orders')">
 
-    <div class="group-icon icon-all">📦</div>
+    <div class="group-icon icon-all">
+      📦
+    </div>
 
     <div class="group-name">
       All Order Group
     </div>
 
-    <div class="count count-all"
-      id="allCount">0</div>
+    <div
+      class="count count-all"
+      id="allCount">
+      0
+    </div>
 
   </button>
 
 
-  <button class="group-card"
+  <!-- PENDING -->
+
+  <button
+    class="group-card"
+    type="button"
     onclick="openModule('pending')">
 
-    <div class="group-icon icon-pending">🕐</div>
+    <div class="group-icon icon-pending">
+      🕐
+    </div>
 
     <div class="group-name">
       Pending Group
     </div>
 
-    <div class="count count-pending"
-      id="pendingCount">0</div>
+    <div
+      class="count count-pending"
+      id="pendingCount">
+      0
+    </div>
 
   </button>
 
 
-  <button class="group-card"
+  <!-- EMERGENCY -->
+
+  <button
+    class="group-card"
+    type="button"
     onclick="openModule('emergency')">
 
-    <div class="group-icon icon-emergency">🚨</div>
+    <div class="group-icon icon-emergency">
+      🚨
+    </div>
 
     <div class="group-name">
       Emergency Group
     </div>
 
-    <div class="count count-emergency"
-      id="emergencyCount">0</div>
-
-  </button>
-
-
-  <button class="group-card"
-    onclick="openModule('delete')">
-
-    <div class="group-icon icon-delete">🗑️</div>
-
-    <div class="group-name">
-      Delete Group
+    <div
+      class="count count-emergency"
+      id="emergencyCount">
+      0
     </div>
 
-    <div class="count count-delete"
-      id="deleteCount">0</div>
+  </button>
+
+
+  <!-- DELETE APPROVAL -->
+
+  <button
+    class="group-card"
+    type="button"
+    onclick="openModule('delete')">
+
+    <div class="group-icon icon-delete">
+      🗑️
+    </div>
+
+    <div class="group-name">
+      Delete Approval
+    </div>
+
+    <div
+      class="count count-delete"
+      id="deleteCount">
+      0
+    </div>
 
   </button>
+
 
 </main>
 
 
+<!-- ===== BOTTOM NAV ===== -->
+
 <nav class="bottom-nav">
 
-  <button class="nav-item active"
+
+  <button
+    class="nav-item active"
+    type="button"
     onclick="goHome()">
 
-    <span class="nav-icon">📦</span>
-    <span>Orders</span>
+    <span class="nav-icon">
+      📦
+    </span>
+
+    <span>
+      Orders
+    </span>
 
   </button>
 
 
-  <button class="nav-item"
+  <button
+    class="nav-item"
+    type="button"
     onclick="openModule('courier')">
 
-    <span class="nav-icon">🚚</span>
-    <span>Courier</span>
+    <span class="nav-icon">
+      🚚
+    </span>
+
+    <span>
+      Courier
+    </span>
 
   </button>
 
 
-  <button class="nav-item"
+  <button
+    class="nav-item"
+    type="button"
     onclick="openModule('settings')">
 
-    <span class="nav-icon">⚙️</span>
-    <span>Settings</span>
+    <span class="nav-icon">
+      ⚙️
+    </span>
+
+    <span>
+      Settings
+    </span>
 
   </button>
+
 
 </nav>
 
@@ -345,67 +507,121 @@ body{
 <script>
 
 /*
-  ORDER MANAGEMENT 02
-  HOME / FINAL CORE
+========================================
+ORDER MANAGEMENT 02
+HOME / FINAL CORE
+========================================
 */
 
+
 const MODULES = {
-  orders:"modules/orders.html",
-  pending:"modules/pending.html",
-  emergency:"modules/emergency.html",
-  delete:"modules/delete-approval.html",
-  courier:"modules/courier.html",
-  settings:"modules/settings.html",
-  summary:"modules/summary.html",
-  notifications:"modules/notifications.html"
+
+  orders:
+    "modules/orders.html",
+
+  pending:
+    "modules/pending.html",
+
+  emergency:
+    "modules/emergency.html",
+
+  delete:
+    "modules/delete-approval.html",
+
+  courier:
+    "modules/courier.html",
+
+  settings:
+    "modules/settings.html",
+
+  summary:
+    "modules/summary.html",
+
+  notifications:
+    "modules/notifications.html"
+
 };
 
+
+/* ===== OPEN MODULE ===== */
 
 function openModule(name){
 
   const path = MODULES[name];
 
   if(!path){
+
     alert("Module পাওয়া যায়নি");
+
     return;
+
   }
 
   window.location.href = path;
+
 }
 
 
+/* ===== HOME ===== */
+
 function goHome(){
-  window.location.href="index.html";
+
+  window.location.href = "index.html";
+
+}
+
+
+/* ===== GROUP COUNTS ===== */
+
+function setGroupCounts(data = {}){
+
+  document.getElementById(
+    "allCount"
+  ).textContent =
+    data.all ?? 0;
+
+
+  document.getElementById(
+    "pendingCount"
+  ).textContent =
+    data.pending ?? 0;
+
+
+  document.getElementById(
+    "emergencyCount"
+  ).textContent =
+    data.emergency ?? 0;
+
+
+  document.getElementById(
+    "deleteCount"
+  ).textContent =
+    data.delete ?? 0;
+
 }
 
 
 /*
-  Database module পরে এখানকার
-  সংখ্যাগুলো real-time update করবে।
+Database module পরে এখানকার
+সংখ্যা real-time update করবে।
 */
 
-function setGroupCounts(data={}){
-
-  document.getElementById("allCount").textContent =
-    data.all ?? 0;
-
-  document.getElementById("pendingCount").textContent =
-    data.pending ?? 0;
-
-  document.getElementById("emergencyCount").textContent =
-    data.emergency ?? 0;
-
-  document.getElementById("deleteCount").textContent =
-    data.delete ?? 0;
-}
-
-
 setGroupCounts({
+
   all:0,
+
   pending:0,
+
   emergency:0,
+
   delete:0
+
 });
+
+
+console.log(
+  "Order Management 02 Final Core Ready"
+);
 
 </script>
 
