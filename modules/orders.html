@@ -1,843 +1,301 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#117b80">
-<title>All Order Group</title>
-
-<style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  font-family:Arial,"Noto Sans Bengali",sans-serif;
-  background:#f3f8f7;
-  color:#173f43;
-  padding-bottom:88px;
-}
-
-/* HEADER */
-.topbar{
-  height:110px;
-  background:#137b80;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  padding:0 25px;
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-.top-title{
-  font-size:31px;
-  font-weight:800;
-  white-space:nowrap;
-}
-.core{
-  font-size:13px;
-  font-weight:800;
-  margin-left:7px;
-}
-.top-actions{
-  margin-left:auto;
-  display:flex;
-  gap:10px;
-}
-.top-btn{
-  width:58px;
-  height:58px;
-  border:0;
-  border-radius:17px;
-  background:rgba(255,255,255,.14);
-  font-size:30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-}
-
-/* PAGE */
-.page{
-  max-width:720px;
-  margin:auto;
-  padding:35px 25px 25px;
-}
-
-/* SEARCH */
-.search-title{
-  font-size:23px;
-  font-weight:800;
-  margin-bottom:14px;
-  color:#286a70;
-}
-.search-box{
-  height:88px;
-  border:2px solid #58a6aa;
-  background:#fff;
-  border-radius:28px;
-  display:flex;
-  align-items:center;
-  padding:0 20px;
-  box-shadow:0 8px 20px rgba(20,100,105,.08);
-}
-.search-icon{
-  font-size:29px;
-  color:#27858a;
-  margin-right:15px;
-}
-.search-box input{
-  flex:1;
-  border:0;
-  outline:0;
-  font-size:25px;
-  min-width:0;
-  color:#37474a;
-}
-.search-box input::placeholder{color:#9ca5a7}
-.clear-btn{
-  width:48px;
-  height:48px;
-  border:0;
-  border-radius:50%;
-  background:#edf5f5;
-  color:#628287;
-  font-size:25px;
-  font-weight:bold;
-}
-
-/* NEW ORDER HEADER */
-.new-wrap{
-  position:relative;
-  margin-top:30px;
-}
-.new-label{
-  position:absolute;
-  top:-15px;
-  left:27px;
-  background:#16969a;
-  color:#fff;
-  padding:7px 16px;
-  border-radius:18px;
-  font-size:13px;
-  font-weight:800;
-  z-index:2;
-}
-.new-head{
-  min-height:135px;
-  border:3px solid #1ca397;
-  border-radius:31px;
-  display:flex;
-  align-items:center;
-  padding:23px;
-  background:#f5fcfb;
-  cursor:pointer;
-}
-.plus-box{
-  width:84px;
-  height:84px;
-  flex:0 0 84px;
-  border-radius:23px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(145deg,#1aa99d,#1493b0);
-  color:white;
-  font-size:55px;
-  font-weight:300;
-}
-.new-text{
-  font-size:26px;
-  font-weight:800;
-  margin-left:18px;
-  flex:1;
-}
-.drop-btn{
-  width:56px;
-  height:56px;
-  border:1px solid #b9dfda;
-  background:#dcf4ef;
-  border-radius:18px;
-  font-size:25px;
-  color:#087c75;
-  font-weight:bold;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:.2s;
-}
-.new-wrap.open .drop-btn{transform:rotate(180deg)}
-
-/* SUBMIT PANEL */
-.submit-panel{
-  display:none;
-  margin-top:40px;
-  padding:43px 23px 23px;
-  border:2px solid #b9e3df;
-  border-radius:27px;
-  background:#fff;
-  box-shadow:0 8px 25px rgba(18,119,125,.05);
-}
-.new-wrap.open .submit-panel{display:block}
-
-.select-page{
-  width:100%;
-  height:82px;
-  border:3px solid #1d9993;
-  border-radius:23px;
-  background:#fff;
-  padding:0 22px;
-  font-size:21px;
-  color:#435c60;
-  outline:none;
-}
-
-.upload-box{
-  margin-top:22px;
-  min-height:145px;
-  border:2px dashed #8dc9c4;
-  border-radius:25px;
-  background:#f0fbfa;
-  display:flex;
-  align-items:center;
-  padding:25px;
-  cursor:pointer;
-}
-.upload-plus{
-  width:94px;
-  height:94px;
-  flex:0 0 94px;
-  background:#dff5f2;
-  border-radius:24px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:58px;
-  color:#129c98;
-}
-.upload-text{
-  font-size:23px;
-  font-weight:800;
-  margin-left:22px;
-}
-#imageInput{display:none}
-
-.preview-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  margin-top:12px;
-}
-.preview-item{
-  position:relative;
-  aspect-ratio:1/1;
-  border-radius:13px;
-  overflow:hidden;
-  background:#eee;
-}
-.preview-item img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.remove-image{
-  position:absolute;
-  right:4px;
-  top:4px;
-  width:27px;
-  height:27px;
-  border:0;
-  border-radius:50%;
-  background:#d93b3b;
-  color:#fff;
-  font-weight:bold;
-}
-
-.order-label{
-  display:block;
-  margin:24px 0 13px;
-  font-size:21px;
-  font-weight:800;
-}
-.order-text{
-  width:100%;
-  height:270px;
-  resize:vertical;
-  border:2px solid #b5d4d2;
-  border-radius:22px;
-  padding:22px;
-  outline:0;
-  font-size:20px;
-  line-height:1.7;
-  font-family:inherit;
-}
-.submit-btn{
-  width:100%;
-  height:82px;
-  border:0;
-  border-radius:24px;
-  margin-top:24px;
-  background:linear-gradient(90deg,#129b91,#148e9d);
-  color:#fff;
-  font-size:23px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-/* OLD ORDERS */
-.old-title{
-  margin:30px 5px 5px;
-  font-size:22px;
-  font-weight:800;
-}
-.old-sub{
-  margin:0 5px 25px;
-  color:#8b9b9e;
-  font-size:16px;
-}
-
-/* SAMPLE ORDER CARD */
-.order-card{
-  background:#fff;
-  border-radius:25px;
-  overflow:hidden;
-  border-top:8px solid #14868a;
-  box-shadow:0 5px 18px rgba(0,0,0,.05);
-  margin-bottom:24px;
-}
-.order-image{
-  width:76%;
-  height:270px;
-  margin:8px auto 12px;
-  border-radius:15px;
-  background:#f1f4f3;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#9ba6a6;
-  overflow:hidden;
-}
-.order-image img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-.card-body{padding:0 16px 25px}
-.order-no{
-  font-size:22px;
-  font-weight:800;
-  color:#08777b;
-  margin:10px 0 12px;
-}
-
-/* INFO BOX */
-.info-box{
-  display:grid;
-  grid-template-columns:1.15fr 1.1fr .85fr 1.5fr;
-  background:#f2fbfa;
-  border:1px solid #c5e2df;
-  border-radius:20px;
-  padding:12px 10px;
-  gap:0;
-}
-.info-item{
-  min-width:0;
-  padding:0 7px;
-  border-right:1px solid #d5e7e5;
-}
-.info-item:last-child{border-right:0}
-.info-label{
-  font-size:11px;
-  color:#617477;
-  margin-bottom:4px;
-}
-.info-value{
-  font-size:14px;
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.whatsapp-mini{
-  border:1px solid #42b978;
-  color:#178d55;
-  border-radius:18px;
-  text-align:center;
-  padding:5px 4px;
-  font-size:12px;
-  font-weight:700;
-}
-
-/* CARD ACTIONS */
-.card-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:9px;
-  margin-top:13px;
-}
-.action{
-  border:0;
-  border-radius:24px;
-  height:49px;
-  font-weight:800;
-  font-size:15px;
-}
-.emergency{background:#fff0ef;color:#d53d3d}
-.fraud{background:#edf8ff;color:#2378a0}
-.delete{background:#f2f3f5;color:#677079}
-
-.customer{
-  font-size:18px;
-  line-height:1.65;
-  margin-top:22px;
-  color:#333;
-  white-space:pre-line;
-}
-.call-row{
-  display:flex;
-  justify-content:flex-end;
-  margin-top:10px;
-}
-.call-btn{
-  min-width:185px;
-  height:58px;
-  border:1px solid #d5dcde;
-  border-radius:18px;
-  background:#f5f6f7;
-  font-size:16px;
-  font-weight:700;
-  color:#60696d;
-}
-.extra-info{
-  margin-top:40px;
-  font-size:18px;
-  line-height:1.7;
-  color:#333;
-}
-.quick-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:30px;
-}
-.quick{
-  border:0;
-  padding:9px 17px;
-  border-radius:20px;
-  font-size:15px;
-  font-weight:800;
-}
-.qwa{background:#e7f9ef;color:#168c52}
-.qcall{background:#eaf4ff;color:#2775a4}
-.qpending{background:#fff4cf;color:#a46a00}
-.qemergency{background:#ffe8e7;color:#d23737}
-.edit-btn{
-  margin-top:18px;
-  width:65px;
-  height:65px;
-  border:0;
-  border-radius:50%;
-  background:#fff2b8;
-  font-size:27px;
-}
-
-/* EMPTY */
-.empty{
-  display:none;
-  text-align:center;
-  color:#87999b;
-  padding:35px 10px;
-}
-
-/* BOTTOM NAV */
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:82px;
-  background:#fff;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  border-top:1px solid #e5eeee;
-  z-index:60;
-}
-.nav-item{
-  border:0;
-  background:#fff;
-  font-size:14px;
-  font-weight:700;
-  color:#657174;
-}
-.nav-item span{
-  display:block;
-  font-size:28px;
-  margin-bottom:3px;
-}
-.nav-item.active{
-  background:#e9f8f6;
-  color:#0d7f7d;
-  border-radius:20px;
-  margin:8px;
-}
-
-/* MOBILE */
+/* =========================================
+   FINAL COMPACT MOBILE SIZE
+   Function/HTML অপরিবর্তিত
+========================================= */
 @media(max-width:520px){
-  .topbar{height:92px;padding:0 16px}
-  .top-title{font-size:25px}
-  .top-btn{width:50px;height:50px;font-size:25px}
-  .page{padding:28px 15px 20px}
-  .search-title{font-size:20px}
-  .search-box{height:72px;border-radius:23px}
-  .search-box input{font-size:18px}
-  .new-head{min-height:112px;padding:18px}
-  .plus-box{width:70px;height:70px;flex-basis:70px;font-size:45px}
-  .new-text{font-size:21px;margin-left:14px}
-  .drop-btn{width:48px;height:48px}
-  .submit-panel{padding:35px 16px 18px}
-  .select-page{height:67px;font-size:18px}
-  .upload-box{min-height:120px;padding:18px}
-  .upload-plus{width:76px;height:76px;flex-basis:76px;font-size:47px}
-  .upload-text{font-size:19px}
-  .order-text{height:235px;font-size:17px}
-  .submit-btn{height:68px;font-size:19px}
-  .order-image{height:245px}
-  .info-box{grid-template-columns:1.15fr 1.1fr .85fr 1.45fr;padding:10px 5px}
-  .info-item{padding:0 5px}
-  .info-value{font-size:12px}
-  .whatsapp-mini{font-size:10px}
-  .action{font-size:13px}
-}
 
-@media(max-width:380px){
-  .top-title{font-size:21px}
-  .core{font-size:10px}
-  .top-btn{width:44px;height:44px}
-  .new-text{font-size:18px}
-}
-</style>
-</head>
-
-<body>
-
-<header class="topbar">
-  <div class="top-title">All Order Group<span class="core">FINAL CORE</span></div>
-
-  <div class="top-actions">
-    <button class="top-btn" type="button">🔔</button>
-    <button class="top-btn" type="button">📊</button>
-  </div>
-</header>
-
-<main class="page">
-
-  <div class="search-title">🔵 All Order Search</div>
-
-  <div class="search-box">
-    <span class="search-icon">⌕</span>
-    <input
-      id="searchInput"
-      type="text"
-      placeholder="Order No, Customer Name, Phone বা Page..."
-      oninput="searchOrders()"
-    >
-    <button class="clear-btn" type="button" onclick="clearSearch()">×</button>
-  </div>
-
-  <section class="new-wrap" id="newWrap">
-
-    <div class="new-label">NEW ORDER</div>
-
-    <div class="new-head" onclick="toggleNewOrder()">
-      <div class="plus-box">+</div>
-      <div class="new-text">নতুন অর্ডার সাবমিট</div>
-      <div class="drop-btn">∨</div>
-    </div>
-
-    <div class="submit-panel">
-
-      <select class="select-page" id="pageSelect">
-        <option value="">পেজ সিলেক্ট করুন</option>
-        <option>Sehzadi online shop</option>
-        <option>Abaya House</option>
-        <option>Maya Borka House</option>
-        <option>Mahira Fashion</option>
-        <option>Black Beauty Abaya</option>
-      </select>
-
-      <label class="upload-box" for="imageInput">
-        <div class="upload-plus">+</div>
-        <div class="upload-text">ছবি যুক্ত করুন</div>
-      </label>
-
-      <input
-        id="imageInput"
-        type="file"
-        accept="image/*"
-        multiple
-        onchange="handleImages(event)"
-      >
-
-      <div class="preview-grid" id="previewGrid"></div>
-
-      <label class="order-label" for="orderText">
-        📝 কাস্টমারের সম্পূর্ণ অর্ডার
-      </label>
-
-      <textarea
-        class="order-text"
-        id="orderText"
-        placeholder="নাম, মোবাইল নাম্বার, ঠিকানা, Size/Color, Quantity ও Product details একসাথে Paste করুন..."
-      ></textarea>
-
-      <button class="submit-btn" type="button" onclick="submitOrder()">
-        ✔️ &nbsp; অর্ডার সাবমিট করুন
-      </button>
-
-    </div>
-  </section>
-
-  <div class="old-title">আগের সব অর্ডার</div>
-  <div class="old-sub">Order serial অনুযায়ী</div>
-
-  <div id="orderList">
-
-    <!-- DEMO CARD: পরে Database-এর data এখানে আসবে -->
-    <article
-      class="order-card"
-      data-search="02 Abaya House Admin রুশনা 01313725383 সুনামগঞ্জ"
-    >
-      <div class="order-image">
-        অর্ডারের ছবি
-      </div>
-
-      <div class="card-body">
-
-        <div class="order-no">অর্ডার নাম্বার 02</div>
-
-        <div class="info-box">
-
-          <div class="info-item">
-            <div class="info-label">Page</div>
-            <div class="info-value">🏬 Abaya House</div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-label">Submitted By</div>
-            <div class="info-value">👤 Admin</div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-label">Token Time</div>
-            <div class="info-value">🕒 11:55 AM</div>
-            <div class="info-value">25/09/2026</div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-label" style="text-align:center">WhatsApp</div>
-            <div class="whatsapp-mini">🟢 নম্বর যোগ করুন</div>
-          </div>
-
-        </div>
-
-        <div class="card-actions">
-          <button class="action emergency" type="button">🚨 Return Pending</button>
-          <button class="action fraud" type="button">🛡 Fraud Check</button>
-          <button class="action delete" type="button">🗑 Delete</button>
-        </div>
-
-        <div class="call-row">
-          <button class="call-btn" type="button">📞 কল হয়নি</button>
-        </div>
-
-        <div class="customer">নাম রুশনা।
-জেলা সুনামগঞ্জ। থানা শান্তিগঞ্জ। ইউনিয়ন পাথারিয়া বাজার।
-গ্রাম পুরান জাহান পুরা। মোবাইল নাম্বার 01313725383
-লং সাইজ 52।</div>
-
-        <div class="extra-info">
-          Full set :1950+150<br>
-          Total:2100
-          <br><br>
-          Maya ✅✅
-        </div>
-
-        <div class="quick-row">
-          <button class="quick qwa" type="button">🟢 WhatsApp</button>
-          <button class="quick qcall" type="button">📞 Call</button>
-          <button class="quick qpending" type="button">Pending</button>
-          <button class="quick qemergency" type="button">🚨 Order sent to Emergency</button>
-        </div>
-
-        <button class="edit-btn" type="button">✎</button>
-
-      </div>
-    </article>
-
-  </div>
-
-  <div class="empty" id="emptyState">
-    কোনো অর্ডার পাওয়া যায়নি
-  </div>
-
-</main>
-
-<nav class="bottom-nav">
-  <button class="nav-item active" type="button">
-    <span>📦</span>
-    Orders
-  </button>
-
-  <button class="nav-item" type="button">
-    <span>🚚</span>
-    Courier
-  </button>
-
-  <button class="nav-item" type="button">
-    <span>⚙️</span>
-    Settings
-  </button>
-</nav>
-
-<script>
-/* ==========================================
-   ALL ORDER UI MODULE
-   Database / Supabase আলাদা module হবে
-========================================== */
-
-let selectedImages = [];
-
-/* NEW ORDER OPEN / CLOSE */
-function toggleNewOrder(){
-  document.getElementById("newWrap").classList.toggle("open");
-}
-
-/* IMAGE SELECT */
-function handleImages(event){
-  const incoming = Array.from(event.target.files || []);
-
-  if(!incoming.length) return;
-
-  const remaining = 7 - selectedImages.length;
-
-  if(remaining <= 0){
-    alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
-    event.target.value = "";
-    return;
+  body{
+    padding-bottom:72px;
   }
 
-  if(incoming.length > remaining){
-    alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
+  /* HEADER */
+  .topbar{
+    height:72px;
+    padding:0 14px;
   }
 
-  selectedImages.push(...incoming.slice(0, remaining));
-
-  renderPreviews();
-  event.target.value = "";
-}
-
-/* IMAGE PREVIEW */
-function renderPreviews(){
-  const grid = document.getElementById("previewGrid");
-  grid.innerHTML = "";
-
-  selectedImages.forEach((file,index)=>{
-    const item = document.createElement("div");
-    item.className = "preview-item";
-
-    const img = document.createElement("img");
-    img.alt = "Order image";
-
-    const reader = new FileReader();
-
-    reader.onload = e=>{
-      img.src = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.className = "remove-image";
-    remove.textContent = "×";
-
-    remove.onclick = ()=>{
-      selectedImages.splice(index,1);
-      renderPreviews();
-    };
-
-    item.appendChild(img);
-    item.appendChild(remove);
-    grid.appendChild(item);
-  });
-}
-
-/* SUBMIT VALIDATION
-   Real database save পরের data module করবে
-*/
-function submitOrder(){
-
-  const page = document.getElementById("pageSelect").value;
-  const text = document.getElementById("orderText").value.trim();
-
-  if(!page){
-    alert("পেজ সিলেক্ট করুন।");
-    return;
+  .top-title{
+    font-size:20px;
   }
 
-  if(selectedImages.length < 1){
-    alert("অন্তত ১টি ছবি যুক্ত করুন।");
-    return;
+  .core{
+    font-size:9px;
+    margin-left:5px;
   }
 
-  if(!text){
-    alert("কাস্টমারের সম্পূর্ণ অর্ডার লিখুন বা Paste করুন।");
-    return;
+  .top-actions{
+    gap:6px;
   }
 
-  alert(
-    "ফর্ম ঠিক আছে। পরের Database Module যুক্ত হলে এই অর্ডার All Order + Pending Group-এ Save হবে।"
-  );
+  .top-btn{
+    width:43px;
+    height:43px;
+    border-radius:12px;
+    font-size:22px;
+  }
+
+  /* PAGE */
+  .page{
+    padding:16px 12px 15px;
+  }
+
+  /* SEARCH */
+  .search-title{
+    font-size:17px;
+    margin-bottom:8px;
+  }
+
+  .search-box{
+    height:56px;
+    border-radius:18px;
+    padding:0 13px;
+  }
+
+  .search-icon{
+    font-size:21px;
+    margin-right:9px;
+  }
+
+  .search-box input{
+    font-size:15px;
+  }
+
+  .clear-btn{
+    width:34px;
+    height:34px;
+    font-size:20px;
+  }
+
+  /* NEW ORDER */
+  .new-wrap{
+    margin-top:20px;
+  }
+
+  .new-label{
+    top:-10px;
+    left:20px;
+    padding:5px 12px;
+    font-size:10px;
+  }
+
+  .new-head{
+    min-height:82px;
+    padding:12px 14px;
+    border-radius:22px;
+    border-width:2px;
+  }
+
+  .plus-box{
+    width:58px;
+    height:58px;
+    flex-basis:58px;
+    border-radius:17px;
+    font-size:39px;
+  }
+
+  .new-text{
+    font-size:18px;
+    margin-left:12px;
+  }
+
+  .drop-btn{
+    width:39px;
+    height:39px;
+    border-radius:13px;
+    font-size:20px;
+  }
+
+  /* SUBMIT PANEL */
+  .submit-panel{
+    margin-top:22px;
+    padding:22px 12px 14px;
+    border-radius:20px;
+  }
+
+  .select-page{
+    height:54px;
+    border-width:2px;
+    border-radius:16px;
+    padding:0 15px;
+    font-size:16px;
+  }
+
+  .upload-box{
+    margin-top:14px;
+    min-height:88px;
+    padding:13px;
+    border-radius:18px;
+  }
+
+  .upload-plus{
+    width:58px;
+    height:58px;
+    flex-basis:58px;
+    border-radius:17px;
+    font-size:39px;
+  }
+
+  .upload-text{
+    margin-left:14px;
+    font-size:17px;
+  }
+
+  .preview-grid{
+    margin-top:8px;
+    gap:6px;
+  }
+
+  .order-label{
+    margin:15px 0 8px;
+    font-size:16px;
+  }
+
+  .order-text{
+    height:155px;
+    min-height:155px;
+    padding:13px;
+    border-radius:16px;
+    font-size:15px;
+    line-height:1.5;
+  }
+
+  .submit-btn{
+    height:54px;
+    margin-top:14px;
+    border-radius:17px;
+    font-size:17px;
+  }
+
+  /* OLD ORDER TITLE */
+  .old-title{
+    margin:20px 4px 3px;
+    font-size:17px;
+  }
+
+  .old-sub{
+    margin:0 4px 12px;
+    font-size:13px;
+  }
+
+  /* ORDER CARD */
+  .order-card{
+    border-radius:18px;
+    border-top-width:6px;
+    margin-bottom:15px;
+  }
+
+  .order-image{
+    width:76%;
+    height:205px;
+    margin:6px auto 7px;
+    border-radius:12px;
+  }
+
+  .card-body{
+    padding:0 11px 14px;
+  }
+
+  .order-no{
+    font-size:18px;
+    margin:6px 0 8px;
+  }
+
+  /* INFO */
+  .info-box{
+    border-radius:14px;
+    padding:7px 4px;
+  }
+
+  .info-item{
+    padding:0 4px;
+  }
+
+  .info-label{
+    font-size:9px;
+    margin-bottom:2px;
+  }
+
+  .info-value{
+    font-size:10px;
+  }
+
+  .whatsapp-mini{
+    border-radius:13px;
+    padding:4px 2px;
+    font-size:9px;
+  }
+
+  /* ACTION BUTTONS */
+  .card-actions{
+    gap:6px;
+    margin-top:8px;
+  }
+
+  .action{
+    height:38px;
+    border-radius:18px;
+    font-size:11px;
+    padding:0 4px;
+  }
+
+  /* CUSTOMER COPY */
+  .call-row{
+    margin-top:7px;
+  }
+
+  .call-btn{
+    min-width:135px;
+    height:43px;
+    border-radius:13px;
+    font-size:12px;
+  }
+
+  .customer{
+    font-size:15px;
+    line-height:1.5;
+    margin-top:10px;
+  }
+
+  .extra-info{
+    margin-top:18px;
+    font-size:15px;
+    line-height:1.5;
+  }
+
+  .quick-row{
+    gap:6px;
+    margin-top:16px;
+  }
+
+  .quick{
+    padding:7px 11px;
+    border-radius:16px;
+    font-size:11px;
+  }
+
+  .edit-btn{
+    margin-top:10px;
+    width:48px;
+    height:48px;
+    font-size:20px;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav{
+    height:68px;
+  }
+
+  .nav-item{
+    font-size:11px;
+  }
+
+  .nav-item span{
+    font-size:22px;
+    margin-bottom:1px;
+  }
+
+  .nav-item.active{
+    border-radius:16px;
+    margin:5px;
+  }
 }
-
-/* SEARCH */
-function searchOrders(){
-
-  const value =
-    document.getElementById("searchInput")
-    .value
-    .trim()
-    .toLowerCase();
-
-  const cards =
-    document.querySelectorAll(".order-card");
-
-  let visible = 0;
-
-  cards.forEach(card=>{
-
-    const text =
-      (card.dataset.search + " " + card.innerText)
-      .toLowerCase();
-
-    const match = text.includes(value);
-
-    card.style.display = match ? "" : "none";
-
-    if(match) visible++;
-  });
-
-  document.getElementById("emptyState").style.display =
-    visible === 0 ? "block" : "none";
-}
-
-/* CLEAR SEARCH */
-function clearSearch(){
-  const input = document.getElementById("searchInput");
-  input.value = "";
-  searchOrders();
-  input.focus();
-}
-</script>
-
-</body>
-</html>
