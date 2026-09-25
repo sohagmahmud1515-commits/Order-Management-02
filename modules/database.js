@@ -1,6 +1,6 @@
 /* =========================================================
    ORDER MANAGEMENT 02
-   DATABASE MODULE
+   DATABASE MODULE — FINAL
    Supabase + Storage + Realtime
 ========================================================= */
 
@@ -17,27 +17,17 @@ let realtimeChannel = null;
 
 
 /* =========================
-   START DATABASE
+   INITIALIZE DATABASE
 ========================= */
 
 function initDatabase() {
-
-  if (
-    !DB_CONFIG.supabaseUrl ||
-    !DB_CONFIG.supabaseAnonKey
-  ) {
-    console.error("Supabase URL অথবা Key পাওয়া যায়নি।");
-    return false;
-  }
 
   if (!window.supabase) {
     console.error("Supabase library পাওয়া যায়নি।");
     return false;
   }
 
-  if (dbClient) {
-    return true;
-  }
+  if (dbClient) return true;
 
   try {
 
@@ -46,33 +36,28 @@ function initDatabase() {
       DB_CONFIG.supabaseAnonKey
     );
 
-    console.log("Supabase Database connected.");
-
+    console.log("Supabase connected.");
     return true;
 
   } catch (error) {
 
-    console.error(
-      "Database connection error:",
-      error
-    );
-
+    console.error("Supabase connection error:", error);
     return false;
   }
 }
 
 
 /* =========================
-   CREATE UNIQUE ORDER ID
+   CREATE UNIQUE ID
 ========================= */
 
 function createOrderId() {
 
   if (
     window.crypto &&
-    typeof crypto.randomUUID === "function"
+    typeof window.crypto.randomUUID === "function"
   ) {
-    return crypto.randomUUID();
+    return window.crypto.randomUUID();
   }
 
   return (
@@ -89,46 +74,33 @@ function createOrderId() {
    IMAGE UPLOAD
 ========================= */
 
-async function uploadOrderImages(
-  files,
-  orderId
-) {
+async function uploadOrderImages(files, orderId) {
 
-  if (!dbClient) {
-
-    const connected = initDatabase();
-
-    if (!connected) {
-      throw new Error(
-        "Supabase Database connect হয়নি।"
-      );
-    }
+  if (!dbClient && !initDatabase()) {
+    throw new Error("Database connect হয়নি।");
   }
 
-  if (!files || files.length === 0) {
-    throw new Error(
-      "অন্তত ১টি ছবি দিন।"
-    );
+  if (!files || files.length < 1) {
+    throw new Error("অন্তত ১টি ছবি দিন।");
   }
 
   if (files.length > 7) {
-    throw new Error(
-      "সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।"
-    );
+    throw new Error("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
   }
 
   const urls = [];
 
-  for (
-    let i = 0;
-    i < files.length;
-    i++
-  ) {
+  for (let i = 0; i < files.length; i++) {
 
     const file = files[i];
 
-    if (!file) {
-      continue;
+    if (!file) continue;
+
+    if (
+      file.type &&
+      !file.type.startsWith("image/")
+    ) {
+      throw new Error("শুধু ছবির ফাইল দেওয়া যাবে।");
     }
 
     let extension = "jpg";
@@ -139,50 +111,35 @@ async function uploadOrderImages(
         file.name
           .split(".")
           .pop()
-          .replace(
-            /[^a-zA-Z0-9]/g,
-            ""
-          )
+          .replace(/[^a-zA-Z0-9]/g, "")
           .toLowerCase() || "jpg";
     }
 
     const uniquePart =
       Date.now() +
       "-" +
-      Math.random()
-        .toString(36)
-        .slice(2, 8);
+      Math.random().toString(36).slice(2, 10);
 
     const filePath =
       `${orderId}/${uniquePart}-${i}.${extension}`;
 
-
-    const {
-      error: uploadError
-    } =
+    const { error: uploadError } =
       await dbClient
         .storage
-        .from(
-          DB_CONFIG.storageBucket
-        )
+        .from(DB_CONFIG.storageBucket)
         .upload(
           filePath,
           file,
           {
             cacheControl: "3600",
             upsert: false,
-            contentType:
-              file.type || undefined
+            contentType: file.type || undefined
           }
         );
 
-
     if (uploadError) {
 
-      console.error(
-        "Image upload error:",
-        uploadError
-      );
+      console.error("Image upload error:", uploadError);
 
       throw new Error(
         "ছবি Upload হয়নি: " +
@@ -190,43 +147,21 @@ async function uploadOrderImages(
       );
     }
 
-
-    const {
-      data: publicData
-    } =
+    const { data } =
       dbClient
         .storage
-        .from(
-          DB_CONFIG.storageBucket
-        )
-        .getPublicUrl(
-          filePath
-        );
+        .from(DB_CONFIG.storageBucket)
+        .getPublicUrl(filePath);
 
-
-    if (
-      publicData &&
-      publicData.publicUrl
-    ) {
-
-      urls.push(
-        publicData.publicUrl
-      );
-
-    } else {
-
-      throw new Error(
-        "ছবির Public URL পাওয়া যায়নি।"
-      );
+    if (!data || !data.publicUrl) {
+      throw new Error("ছবির URL পাওয়া যায়নি।");
     }
+
+    urls.push(data.publicUrl);
   }
 
-
-  if (urls.length === 0) {
-
-    throw new Error(
-      "কোনো ছবি Upload হয়নি।"
-    );
+  if (!urls.length) {
+    throw new Error("কোনো ছবি Upload হয়নি।");
   }
 
   return urls;
@@ -239,69 +174,54 @@ async function uploadOrderImages(
 
 async function saveOrderToDatabase({
   page,
-  orderText,
+  customerText,
+  phone,
   images,
   submittedBy = "Admin",
   moderatorWhatsapp = ""
 }) {
 
-  if (!dbClient) {
-
-    const connected =
-      initDatabase();
-
-    if (!connected) {
-
-      throw new Error(
-        "Supabase connection তৈরি হয়নি।"
-      );
-    }
+  if (!dbClient && !initDatabase()) {
+    throw new Error("Database connect হয়নি।");
   }
 
+  page = String(page || "").trim();
+  customerText = String(customerText || "").trim();
+  phone = String(phone || "").trim();
 
-  if (!page || !page.trim()) {
+  if (!page) {
+    throw new Error("পেজ সিলেক্ট করুন।");
+  }
 
+  if (!customerText) {
+    throw new Error("কাস্টমারের অর্ডারের তথ্য দিন।");
+  }
+
+  /*
+    Bangladesh mobile:
+    English digits only
+    01XXXXXXXXX = 11 digits
+  */
+
+  if (!/^01\d{9}$/.test(phone)) {
     throw new Error(
-      "পেজ সিলেক্ট করুন।"
+      "সঠিক ১১ সংখ্যার মোবাইল নাম্বার দিন। উদাহরণ: 01712345678"
     );
   }
 
-
-  if (
-    !orderText ||
-    !orderText.trim()
-  ) {
-
-    throw new Error(
-      "অর্ডারের তথ্য দিন।"
-    );
+  if (!images || images.length < 1) {
+    throw new Error("অন্তত ১টি ছবি দিন।");
   }
-
-
-  if (
-    !images ||
-    images.length < 1
-  ) {
-
-    throw new Error(
-      "অন্তত ১টি ছবি দিন।"
-    );
-  }
-
 
   if (images.length > 7) {
-
-    throw new Error(
-      "সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।"
-    );
+    throw new Error("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
   }
 
+  const orderId = createOrderId();
 
-  const orderId =
-    createOrderId();
-
-
-  /* FIRST UPLOAD IMAGES */
+  /*
+    প্রথমে ছবি Storage-এ যাবে।
+  */
 
   const imageUrls =
     await uploadOrderImages(
@@ -309,23 +229,24 @@ async function saveOrderToDatabase({
       orderId
     );
 
+  const now = new Date().toISOString();
 
-  const now =
-    new Date().toISOString();
-
+  /*
+    এই field-গুলো এখন Supabase table-এর
+    column-এর সাথে সরাসরি মিলছে।
+  */
 
   const orderData = {
 
     id: orderId,
 
-    page_name:
-      page.trim(),
+    page_name: page,
 
-    order_text:
-      orderText.trim(),
+    customer_text: customerText,
 
-    image_urls:
-      imageUrls,
+    phone: phone,
+
+    images: imageUrls,
 
     submitted_by:
       submittedBy || "Admin",
@@ -333,47 +254,32 @@ async function saveOrderToDatabase({
     moderator_whatsapp:
       moderatorWhatsapp || "",
 
-    status:
-      "pending",
+    status: "pending",
 
-    emergency:
-      false,
+    emergency: false,
 
-    courier_sent:
-      false,
+    courier_sent: false,
 
-    call_status:
-      "not_called",
+    call_status: "not_called",
 
-    created_at:
-      now,
+    created_at: now,
 
-    updated_at:
-      now
+    updated_at: now
   };
-
 
   const {
     data,
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
-      .insert(
-        orderData
-      )
+      .from(DB_CONFIG.ordersTable)
+      .insert(orderData)
       .select()
       .single();
 
-
   if (error) {
 
-    console.error(
-      "Order save error:",
-      error
-    );
+    console.error("Order save error:", error);
 
     throw new Error(
       "অর্ডার Save হয়নি: " +
@@ -381,261 +287,160 @@ async function saveOrderToDatabase({
     );
   }
 
-
-  console.log(
-    "Order successfully saved:",
-    data
-  );
+  console.log("Order saved:", data);
 
   return data;
 }
 
 
 /* =========================
-   LOAD ALL ORDERS
+   LOAD ALL
 ========================= */
 
 async function loadAllOrders() {
 
-  if (!dbClient) {
-
-    const connected =
-      initDatabase();
-
-    if (!connected) {
-      return [];
-    }
+  if (!dbClient && !initDatabase()) {
+    return [];
   }
-
 
   const {
     data,
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
+      .from(DB_CONFIG.ordersTable)
       .select("*")
       .order(
         "created_at",
-        {
-          ascending: false
-        }
+        { ascending: false }
       );
 
-
   if (error) {
-
-    console.error(
-      "All Order load error:",
-      error
-    );
-
+    console.error("Load All error:", error);
     throw error;
   }
-
 
   return data || [];
 }
 
 
 /* =========================
-   LOAD PENDING ORDERS
+   LOAD PENDING
 ========================= */
 
 async function loadPendingOrders() {
 
-  if (!dbClient) {
-
-    const connected =
-      initDatabase();
-
-    if (!connected) {
-      return [];
-    }
+  if (!dbClient && !initDatabase()) {
+    return [];
   }
-
 
   const {
     data,
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
+      .from(DB_CONFIG.ordersTable)
       .select("*")
-      .eq(
-        "status",
-        "pending"
-      )
-      .eq(
-        "emergency",
-        false
-      )
+      .eq("status", "pending")
+      .eq("emergency", false)
       .order(
         "created_at",
-        {
-          ascending: true
-        }
+        { ascending: true }
       );
 
-
   if (error) {
-
-    console.error(
-      "Pending load error:",
-      error
-    );
-
+    console.error("Pending load error:", error);
     throw error;
   }
-
 
   return data || [];
 }
 
 
 /* =========================
-   LOAD EMERGENCY ORDERS
+   LOAD EMERGENCY
 ========================= */
 
 async function loadEmergencyOrders() {
 
-  if (!dbClient) {
-
-    const connected =
-      initDatabase();
-
-    if (!connected) {
-      return [];
-    }
+  if (!dbClient && !initDatabase()) {
+    return [];
   }
-
 
   const {
     data,
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
+      .from(DB_CONFIG.ordersTable)
       .select("*")
-      .eq(
-        "emergency",
-        true
-      )
+      .eq("emergency", true)
       .order(
         "created_at",
-        {
-          ascending: true
-        }
+        { ascending: true }
       );
 
-
-  if (error) {
-    throw error;
-  }
-
+  if (error) throw error;
 
   return data || [];
 }
 
 
 /* =========================
-   MOVE TO EMERGENCY
+   EMERGENCY
 ========================= */
 
-async function moveOrderToEmergency(
-  orderId
-) {
+async function moveOrderToEmergency(orderId) {
 
-  if (!dbClient) {
-
-    const connected =
-      initDatabase();
-
-    if (!connected) {
-      throw new Error(
-        "Database connect হয়নি।"
-      );
-    }
+  if (!dbClient && !initDatabase()) {
+    throw new Error("Database connect হয়নি।");
   }
-
-
-  const now =
-    new Date().toISOString();
-
 
   const {
     data,
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
+      .from(DB_CONFIG.ordersTable)
       .update({
         emergency: true,
-        updated_at: now
+        updated_at: new Date().toISOString()
       })
-      .eq(
-        "id",
-        orderId
-      )
+      .eq("id", orderId)
       .select()
       .single();
 
-
-  if (error) {
-    throw error;
-  }
-
+  if (error) throw error;
 
   return data;
 }
 
 
 /* =========================
-   REMOVE FROM EMERGENCY
+   REMOVE EMERGENCY
 ========================= */
 
-async function removeEmergency(
-  orderId
-) {
+async function removeEmergency(orderId) {
 
-  if (!dbClient) {
-    initDatabase();
+  if (!dbClient && !initDatabase()) {
+    throw new Error("Database connect হয়নি।");
   }
-
 
   const {
     data,
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
+      .from(DB_CONFIG.ordersTable)
       .update({
         emergency: false,
-        updated_at:
-          new Date().toISOString()
+        updated_at: new Date().toISOString()
       })
-      .eq(
-        "id",
-        orderId
-      )
+      .eq("id", orderId)
       .select()
       .single();
 
-
-  if (error) {
-    throw error;
-  }
-
+  if (error) throw error;
 
   return data;
 }
@@ -650,54 +455,35 @@ async function updateCallStatus(
   status
 ) {
 
-  if (!dbClient) {
-    initDatabase();
+  if (!dbClient && !initDatabase()) {
+    throw new Error("Database connect হয়নি।");
   }
 
-
-  const now =
-    new Date().toISOString();
-
+  const now = new Date().toISOString();
 
   const {
     data,
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
+      .from(DB_CONFIG.ordersTable)
       .update({
-
-        call_status:
-          status,
-
-        call_updated_at:
-          now,
-
-        updated_at:
-          now
-
+        call_status: status,
+        call_updated_at: now,
+        updated_at: now
       })
-      .eq(
-        "id",
-        orderId
-      )
+      .eq("id", orderId)
       .select()
       .single();
 
-
-  if (error) {
-    throw error;
-  }
-
+  if (error) throw error;
 
   return data;
 }
 
 
 /* =========================
-   EDIT ORDER
+   UPDATE ORDER
 ========================= */
 
 async function updateOrder(
@@ -705,80 +491,77 @@ async function updateOrder(
   changes
 ) {
 
-  if (!dbClient) {
-    initDatabase();
+  if (!dbClient && !initDatabase()) {
+    throw new Error("Database connect হয়নি।");
   }
 
+  const allowed = {};
 
-  const safeChanges = {
+  if ("page_name" in changes)
+    allowed.page_name = changes.page_name;
 
-    ...changes,
+  if ("customer_text" in changes)
+    allowed.customer_text = changes.customer_text;
 
-    updated_at:
-      new Date().toISOString()
+  if ("phone" in changes)
+    allowed.phone = changes.phone;
 
-  };
+  if ("images" in changes)
+    allowed.images = changes.images;
 
+  if ("status" in changes)
+    allowed.status = changes.status;
+
+  if ("emergency" in changes)
+    allowed.emergency = changes.emergency;
+
+  if ("courier_sent" in changes)
+    allowed.courier_sent = changes.courier_sent;
+
+  if ("call_status" in changes)
+    allowed.call_status = changes.call_status;
+
+  allowed.updated_at =
+    new Date().toISOString();
 
   const {
     data,
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
-      .update(
-        safeChanges
-      )
-      .eq(
-        "id",
-        orderId
-      )
+      .from(DB_CONFIG.ordersTable)
+      .update(allowed)
+      .eq("id", orderId)
       .select()
       .single();
 
-
-  if (error) {
-    throw error;
-  }
-
+  if (error) throw error;
 
   return data;
 }
 
 
 /* =========================
-   DELETE ORDER
+   DELETE
 ========================= */
 
 async function deleteOrderFromDatabase(
   orderId
 ) {
 
-  if (!dbClient) {
-    initDatabase();
+  if (!dbClient && !initDatabase()) {
+    throw new Error("Database connect হয়নি।");
   }
-
 
   const {
     error
   } =
     await dbClient
-      .from(
-        DB_CONFIG.ordersTable
-      )
+      .from(DB_CONFIG.ordersTable)
       .delete()
-      .eq(
-        "id",
-        orderId
-      );
+      .eq("id", orderId);
 
-
-  if (error) {
-    throw error;
-  }
-
+  if (error) throw error;
 
   return true;
 }
@@ -788,20 +571,11 @@ async function deleteOrderFromDatabase(
    REALTIME
 ========================= */
 
-function startOrderRealtime(
-  callback
-) {
+function startOrderRealtime(callback) {
 
-  if (!dbClient) {
-
-    const connected =
-      initDatabase();
-
-    if (!connected) {
-      return null;
-    }
+  if (!dbClient && !initDatabase()) {
+    return null;
   }
-
 
   if (realtimeChannel) {
 
@@ -812,52 +586,39 @@ function startOrderRealtime(
     realtimeChannel = null;
   }
 
-
   realtimeChannel =
     dbClient
       .channel(
-        "order-management-realtime"
+        "order-management-orders-realtime"
       )
       .on(
-
         "postgres_changes",
-
         {
           event: "*",
           schema: "public",
-          table:
-            DB_CONFIG.ordersTable
+          table: DB_CONFIG.ordersTable
         },
-
         payload => {
 
           console.log(
-            "Realtime order change:",
+            "Realtime change:",
             payload
           );
 
-
           if (
-            typeof callback ===
-            "function"
+            typeof callback === "function"
           ) {
-
-            callback(
-              payload
-            );
+            callback(payload);
           }
         }
       )
-      .subscribe(
-        status => {
+      .subscribe(status => {
 
-          console.log(
-            "Realtime status:",
-            status
-          );
-        }
-      );
-
+        console.log(
+          "Realtime status:",
+          status
+        );
+      });
 
   return realtimeChannel;
 }
@@ -884,26 +645,18 @@ function stopOrderRealtime() {
 
 
 /* =========================
-   CONNECTION TEST
+   TEST
 ========================= */
 
 async function testDatabaseConnection() {
 
-  if (!dbClient) {
+  if (!dbClient && !initDatabase()) {
 
-    const connected =
-      initDatabase();
-
-    if (!connected) {
-
-      return {
-        success: false,
-        message:
-          "Database connect হয়নি।"
-      };
-    }
+    return {
+      success: false,
+      message: "Database connect হয়নি।"
+    };
   }
-
 
   try {
 
@@ -911,9 +664,7 @@ async function testDatabaseConnection() {
       error
     } =
       await dbClient
-        .from(
-          DB_CONFIG.ordersTable
-        )
+        .from(DB_CONFIG.ordersTable)
         .select(
           "id",
           {
@@ -922,47 +673,33 @@ async function testDatabaseConnection() {
           }
         );
 
-
-    if (error) {
-      throw error;
-    }
-
+    if (error) throw error;
 
     return {
       success: true,
-      message:
-        "Database connection OK"
+      message: "Database connection OK"
     };
 
-
   } catch (error) {
-
-    console.error(
-      "Database test failed:",
-      error
-    );
-
 
     return {
       success: false,
       message:
-        error.message
+        error.message || "Unknown error"
     };
   }
 }
 
 
 /* =========================
-   EXPORT FUNCTIONS
+   EXPORT
 ========================= */
 
 window.OrderDatabase = {
 
-  init:
-    initDatabase,
+  init: initDatabase,
 
-  test:
-    testDatabaseConnection,
+  test: testDatabaseConnection,
 
   uploadImages:
     uploadOrderImages,
@@ -1010,15 +747,11 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
 
-    const connected =
-      initDatabase();
-
-    if (connected) {
+    if (initDatabase()) {
 
       console.log(
-        "ORDER MANAGEMENT 02 database module ready."
+        "ORDER MANAGEMENT 02 DATABASE READY"
       );
     }
-
   }
 );
