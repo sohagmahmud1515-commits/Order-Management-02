@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f83">
+
+<title>All Order Group</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#f4f8f7;
+  color:#17202a;
+  padding-bottom:30px;
+}
+
+/* HEADER */
+
+.header{
+  height:72px;
+  background:#087f83;
+  color:white;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.back-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:11px;
+  background:rgba(255,255,255,.15);
+  color:white;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.header-title{
+  flex:1;
+  font-size:19px;
+  font-weight:800;
+}
+
+/* PAGE */
+
+.container{
+  max-width:650px;
+  margin:14px auto;
+  padding:0 12px;
+}
+
+/* SUBMIT BOX */
+
+.submit-box{
+  background:white;
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+.box-title{
+  font-size:18px;
+  font-weight:800;
+  margin-bottom:13px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.field{
+  margin-bottom:8px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:#526064;
+  margin-bottom:4px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid #d7e0e0;
+  border-radius:10px;
+  padding:11px;
+  background:white;
+  font-size:15px;
+  outline:none;
+}
+
+input:focus,
+textarea:focus{
+  border-color:#087f83;
+}
+
+textarea{
+  min-height:68px;
+  resize:vertical;
+}
+
+/* IMAGE */
+
+.image-area{
+  border:1px dashed #94b9b7;
+  background:#f8fbfb;
+  border-radius:11px;
+  padding:10px;
+}
+
+.preview{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:9px;
+}
+
+.preview-item{
+  position:relative;
+}
+
+.preview-item img{
+  width:68px;
+  height:68px;
+  border-radius:9px;
+  object-fit:cover;
+  border:1px solid #ddd;
+}
+
+.remove-image{
+  position:absolute;
+  right:-5px;
+  top:-6px;
+  width:22px;
+  height:22px;
+  border:0;
+  border-radius:50%;
+  background:#d93025;
+  color:white;
+  font-weight:800;
+}
+
+/* SUBMIT */
+
+.submit-btn{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  background:#087f83;
+  color:white;
+  padding:13px;
+  margin-top:5px;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+/* SEARCH */
+
+.search-box{
+  margin-bottom:12px;
+}
+
+.search-box input{
+  background:white;
+  box-shadow:0 3px 10px rgba(0,0,0,.04);
+}
+
+/* EMPTY */
+
+.empty{
+  background:white;
+  border-radius:15px;
+  padding:30px 12px;
+  text-align:center;
+  color:#748080;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
+
+/* ORDER CARD */
+
+.order-card{
+  background:white;
+  border-radius:16px;
+  padding:13px;
+  margin-bottom:11px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+.card-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.order-number{
+  font-size:15px;
+  font-weight:800;
+}
+
+.status{
+  padding:5px 8px;
+  border-radius:10px;
+  background:#fff0bd;
+  color:#8b5a00;
+  font-size:11px;
+  font-weight:800;
+}
+
+.meta{
+  font-size:12px;
+  color:#667477;
+  margin-top:5px;
+}
+
+.customer{
+  margin-top:8px;
+  font-size:14px;
+  line-height:1.55;
+}
+
+.card-actions{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.mini-btn{
+  border:0;
+  border-radius:9px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.emergency{
+  background:#ffe0e0;
+  color:#b42318;
+}
+
+.fraud{
+  background:#e5eeff;
+  color:#2456a6;
+}
+
+.delete{
+  background:#eee1ff;
+  color:#6036b2;
+}
+
+/* SMALL PHONE */
+
+@media(max-width:390px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .header-title{
+    font-size:17px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <button
+    class="back-btn"
+    type="button"
+    onclick="goBack()">
+    ‹
+  </button>
+
+  <div class="header-title">
+    All Order Group
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <!-- ORDER SUBMIT MODULE -->
+
+  <section class="submit-box">
+
+    <div class="box-title">
+      নতুন অর্ডার
+    </div>
+
+    <form id="orderForm">
+
+      <div class="grid">
+
+        <div class="field">
+          <label>Customer Name</label>
+          <input
+            id="customerName"
+            type="text">
+        </div>
+
+
+        <div class="field">
+          <label>Phone *</label>
+          <input
+            id="phone"
+            type="tel"
+            inputmode="numeric"
+            placeholder="01XXXXXXXXX"
+            required>
+        </div>
+
+
+        <div class="field full">
+          <label>Full Address</label>
+          <textarea id="address"></textarea>
+        </div>
+
+
+        <div class="field">
+          <label>Size *</label>
+          <input
+            id="size"
+            type="text"
+            required>
+        </div>
+
+
+        <div class="field">
+          <label>Color</label>
+          <input
+            id="color"
+            type="text">
+        </div>
+
+
+        <div class="field">
+          <label>Quantity</label>
+          <input
+            id="quantity"
+            type="number"
+            min="1"
+            value="1">
+        </div>
+
+
+        <div class="field">
+          <label>COD Amount</label>
+          <input
+            id="amount"
+            type="number"
+            min="0">
+        </div>
+
+
+        <div class="field full">
+          <label>Note</label>
+          <textarea id="note"></textarea>
+        </div>
+
+
+        <div class="field full">
+
+          <label>
+            Order Image * (1–7)
+          </label>
+
+          <div class="image-area">
+
+            <input
+              id="images"
+              type="file"
+              accept="image/*"
+              multiple>
+
+            <div
+              class="preview"
+              id="preview">
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="submit-btn"
+        type="submit">
+        Submit Order
+      </button>
+
+    </form>
+
+  </section>
+
+
+  <!-- SEARCH -->
+
+  <div class="search-box">
+
+    <input
+      id="search"
+      type="search"
+      placeholder="নাম / ফোন / ঠিকানা / Order No. দিয়ে খুঁজুন">
+
+  </div>
+
+
+  <!-- ALL ORDER LIST -->
+
+  <section id="orderList">
+
+    <div class="empty">
+      এখনো কোনো Order নেই
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+/*
+========================================
+ORDER MANAGEMENT 02
+ALL ORDER + SUBMIT MODULE
+========================================
+
+FINAL DATABASE RULE:
+
+Submit
+   ↓
+All Order = MASTER RECORD
+   +
+Pending = WORKING ORDER
+
+All Order থেকে Courier হবে না।
+
+Courier button থাকবে:
+Pending / Emergency module-এ।
+
+Database connection আলাদা shared
+module দিয়ে পরের ধাপে যুক্ত হবে।
+*/
+
+
+let selectedImages = [];
+
+
+/* ===== BACK ===== */
+
+function goBack(){
+
+  window.location.href = "../index.html";
+
+}
+
+
+/* ===== IMAGE SELECT ===== */
+
+document
+.getElementById("images")
+.addEventListener(
+  "change",
+  function(event){
+
+    const files =
+      Array.from(event.target.files);
+
+    if(
+      selectedImages.length +
+      files.length > 7
+    ){
+
+      alert(
+        "সর্বোচ্চ ৭টি ছবি দেওয়া যাবে"
+      );
+
+      event.target.value = "";
+
+      return;
+    }
+
+    selectedImages.push(...files);
+
+    renderImages();
+
+    event.target.value = "";
+
+  }
+);
+
+
+/* ===== IMAGE PREVIEW ===== */
+
+function renderImages(){
+
+  const preview =
+    document.getElementById("preview");
+
+  preview.innerHTML = "";
+
+  selectedImages.forEach(
+    function(file,index){
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "preview-item";
+
+
+      const image =
+        document.createElement("img");
+
+      image.src =
+        URL.createObjectURL(file);
+
+
+      const remove =
+        document.createElement("button");
+
+      remove.type = "button";
+
+      remove.className =
+        "remove-image";
+
+      remove.textContent = "×";
+
+
+      remove.onclick =
+        function(){
+
+          selectedImages.splice(
+            index,
+            1
+          );
+
+          renderImages();
+
+        };
+
+
+      item.appendChild(image);
+
+      item.appendChild(remove);
+
+      preview.appendChild(item);
+
+    }
+  );
+
+}
+
+
+/* ===== SUBMIT ===== */
+
+document
+.getElementById("orderForm")
+.addEventListener(
+  "submit",
+  function(event){
+
+    event.preventDefault();
+
+
+    const phone =
+      document
+      .getElementById("phone")
+      .value
+      .trim();
+
+
+    const size =
+      document
+      .getElementById("size")
+      .value
+      .trim();
+
+
+    if(
+      !/^[0-9]+$/.test(phone)
+    ){
+
+      alert(
+        "Phone English digit-এ লিখুন"
+      );
+
+      return;
+    }
+
+
+    if(!size){
+
+      alert(
+        "Size দিতে হবে"
+      );
+
+      return;
+    }
+
+
+    if(
+      selectedImages.length < 1
+    ){
+
+      alert(
+        "কমপক্ষে ১টি ছবি দিতে হবে"
+      );
+
+      return;
+    }
+
+
+    /*
+      এখানে এখন fake/local order
+      save করা হচ্ছে না।
+
+      Shared Database Module যুক্ত
+      করার পরে এখান থেকেই:
+
+      1. Image upload
+      2. Master Order create
+      3. Pending status create
+      4. Realtime sync
+
+      একসাথে হবে।
+    */
+
+
+    alert(
+      "Submit Module Ready — Database connection পরের ধাপে যুক্ত হবে।"
+    );
+
+  }
+);
+
+
+/* ===== SEARCH ===== */
+
+document
+.getElementById("search")
+.addEventListener(
+  "input",
+  function(){
+
+    /*
+      Database module যুক্ত হলে
+      All Order search এখানে কাজ করবে।
+    */
+
+  }
+);
+
+
+console.log(
+  "All Order Module Ready"
+);
+
+</script>
+
+</body>
+</html>
