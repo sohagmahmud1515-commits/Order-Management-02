@@ -8,256 +8,364 @@
 <title>All Order Group</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
   font-family:Arial,"Noto Sans Bengali",sans-serif;
   background:#f4f8f7;
   color:#17202a;
-  padding-bottom:85px;
+  padding-bottom:82px;
 }
 
+button,input,select,textarea{font-family:inherit}
+
 .header{
-  height:72px;
+  height:70px;
   background:#087f83;
   color:#fff;
-  padding:0 15px;
   display:flex;
   align-items:center;
-  gap:12px;
+  padding:0 14px;
+  gap:11px;
   position:sticky;
   top:0;
-  z-index:50;
+  z-index:100;
 }
 
 .back{
-  width:40px;
-  height:40px;
-  border:0;
-  border-radius:10px;
-  background:rgba(255,255,255,.15);
-  color:white;
-  font-size:22px;
+  width:39px;height:39px;border:0;border-radius:10px;
+  background:rgba(255,255,255,.16);
+  color:#fff;font-size:23px;
 }
 
-.header-title{
-  font-size:20px;
-  font-weight:800;
-}
+.header-title{font-size:20px;font-weight:800}
 
 .container{
   max-width:650px;
   margin:auto;
-  padding:14px;
+  padding:12px;
 }
 
 .search{
   width:100%;
-  height:48px;
-  border:1px solid #d7e1df;
-  border-radius:13px;
-  padding:0 14px;
-  font-size:16px;
+  height:46px;
+  border:1px solid #d4dfdd;
+  border-radius:12px;
+  padding:0 13px;
+  font-size:15px;
+  background:#fff;
   outline:none;
-  background:white;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
 .submit-card{
-  background:white;
-  border-radius:17px;
-  padding:14px;
-  margin-bottom:15px;
-  box-shadow:0 4px 12px rgba(0,0,0,.06);
+  background:#fff;
+  border-radius:15px;
+  padding:13px;
+  margin-bottom:14px;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
 }
 
 .submit-title{
   font-size:17px;
   font-weight:800;
   color:#087f83;
-  margin-bottom:12px;
-}
-
-.field{
-  margin-bottom:12px;
+  margin-bottom:11px;
 }
 
 .label{
   display:block;
-  font-size:14px;
-  font-weight:700;
-  margin-bottom:6px;
+  font-size:13px;
+  font-weight:800;
+  margin:10px 0 5px;
 }
 
-select,
-textarea{
+select,textarea{
   width:100%;
-  border:1px solid #d7e1df;
-  border-radius:12px;
-  background:white;
-  font-size:16px;
+  border:1px solid #d5dfdd;
+  border-radius:11px;
+  background:#fff;
   outline:none;
+  font-size:15px;
 }
 
 select{
-  height:48px;
-  padding:0 12px;
+  height:46px;
+  padding:0 10px;
 }
 
 textarea{
-  min-height:145px;
-  padding:12px;
-  resize:vertical;
+  min-height:130px;
+  padding:11px;
   line-height:1.5;
+  resize:vertical;
 }
 
-.upload-box{
-  border:2px dashed #b8cfcb;
-  border-radius:13px;
-  padding:14px;
-  text-align:center;
+.upload{
+  padding:11px;
+  border:2px dashed #b9cfcb;
+  border-radius:11px;
   background:#f9fcfb;
 }
 
-.upload-box input{
-  width:100%;
-}
-
-.hint{
+.upload-note{
   font-size:12px;
-  color:#687473;
-  margin-top:6px;
+  color:#6a7473;
+  margin-top:5px;
 }
 
 .preview{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:7px;
-  margin-top:10px;
+  gap:6px;
+  margin-top:9px;
 }
 
 .preview-item{
   position:relative;
-  aspect-ratio:1/1;
+  aspect-ratio:1;
 }
 
 .preview-item img{
   width:100%;
   height:100%;
   object-fit:cover;
-  border-radius:9px;
+  border-radius:8px;
 }
 
 .remove-image{
   position:absolute;
-  right:-4px;
-  top:-4px;
+  top:-5px;
+  right:-5px;
   width:23px;
   height:23px;
   border:0;
   border-radius:50%;
   background:#e53935;
-  color:white;
-  font-weight:bold;
+  color:#fff;
+  font-weight:900;
 }
 
 .submit-btn{
   width:100%;
-  height:50px;
+  height:48px;
   border:0;
-  border-radius:13px;
+  border-radius:11px;
   background:#087f83;
-  color:white;
-  font-size:17px;
+  color:#fff;
+  font-size:16px;
   font-weight:800;
+  margin-top:11px;
 }
 
-.submit-btn:disabled{
-  opacity:.6;
-}
+.submit-btn:disabled{opacity:.55}
 
-.status{
-  margin-top:10px;
-  font-size:14px;
+.status-message{
+  font-size:13px;
   font-weight:700;
-  line-height:1.5;
+  margin-top:8px;
   white-space:pre-line;
 }
 
-.orders-title{
-  font-size:17px;
+.list-title{
+  font-size:16px;
   font-weight:800;
-  margin:4px 2px 10px;
+  margin:3px 2px 9px;
 }
+
+/* ORDER CARD */
 
 .order-card{
-  background:white;
-  border-radius:16px;
-  padding:13px;
-  margin-bottom:12px;
-  box-shadow:0 3px 10px rgba(0,0,0,.06);
+  background:#fff;
+  border-radius:14px;
+  padding:11px;
+  margin-bottom:11px;
+  box-shadow:0 3px 10px rgba(0,0,0,.07);
 }
 
-.order-top{
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  align-items:flex-start;
-  margin-bottom:9px;
+.card-top{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:5px 8px;
+  align-items:center;
 }
 
-.order-number{
-  font-size:15px;
-  font-weight:800;
-}
-
-.page-badge{
-  background:#e4f4f1;
+.page-name{
+  font-size:14px;
+  font-weight:900;
   color:#087f83;
-  padding:5px 8px;
+}
+
+.order-no{
+  font-size:13px;
+  font-weight:900;
+}
+
+.info-line{
+  font-size:11px;
+  color:#65706f;
+  line-height:1.45;
+}
+
+.whatsapp-info{
+  color:#16884c;
+  font-weight:700;
+}
+
+.action-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  margin:9px 0;
+}
+
+.mini-btn{
+  min-height:35px;
+  border:0;
   border-radius:8px;
-  font-size:12px;
+  font-size:11px;
   font-weight:800;
+  padding:4px 3px;
+}
+
+.emergency-btn{
+  background:#fff0d7;
+  color:#ad6800;
+}
+
+.fraud-btn{
+  background:#e7f0ff;
+  color:#2467c9;
+}
+
+.delete-btn{
+  background:#ffe5e5;
+  color:#d82d35;
 }
 
 .order-images{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:6px;
-  margin-bottom:9px;
+  gap:5px;
+  margin:7px 0;
 }
 
 .order-images img{
   width:100%;
-  aspect-ratio:1/1;
+  aspect-ratio:1;
   object-fit:cover;
   border-radius:8px;
+  background:#eee;
 }
 
-.order-text{
+.customer-text{
   white-space:pre-wrap;
-  line-height:1.5;
-  font-size:14px;
   overflow-wrap:anywhere;
+  font-size:14px;
+  line-height:1.55;
+  padding:8px 2px;
 }
 
-.meta{
+.call-box{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:7px;
   border-top:1px solid #edf1f0;
-  margin-top:10px;
-  padding-top:8px;
+  border-bottom:1px solid #edf1f0;
+  padding:8px 0;
+  margin-top:3px;
+}
+
+.call-status{
   font-size:12px;
-  color:#687473;
-  line-height:1.5;
+  font-weight:800;
+}
+
+.call-status.not-called{color:#dc3038}
+.call-status.called{color:#16884c}
+
+.call-btn{
+  border:0;
+  border-radius:8px;
+  background:#e6f6f3;
+  color:#087f83;
+  padding:7px 10px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.contact-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:8px;
+}
+
+.contact-btn{
+  border:0;
+  border-radius:9px;
+  height:38px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.wa-btn{
+  background:#e4f8ea;
+  color:#12833e;
+}
+
+.phone-btn{
+  background:#e5f0ff;
+  color:#2265c7;
+}
+
+.bottom-status{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:7px;
+  margin-top:8px;
+}
+
+.status-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:27px;
+  border-radius:20px;
+  padding:4px 10px;
+  background:#fff0c9;
+  color:#9b6600;
+  font-size:11px;
+  font-weight:900;
+}
+
+.status-pill.emergency{
+  background:#ffe0e0;
+  color:#d52b33;
+}
+
+.token{
+  font-size:10px;
+  color:#747d7c;
+}
+
+.fraud-result{
+  display:none;
+  background:#f1f6ff;
+  border:1px solid #d7e5ff;
+  padding:8px;
+  border-radius:8px;
+  font-size:12px;
+  margin-bottom:7px;
+  line-height:1.45;
 }
 
 .empty{
   text-align:center;
   padding:30px 10px;
-  color:#75807e;
+  color:#727c7a;
 }
 
 .bottom-nav{
@@ -265,31 +373,38 @@ textarea{
   bottom:0;
   left:0;
   right:0;
-  height:72px;
-  background:white;
+  height:70px;
+  background:#fff;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   box-shadow:0 -3px 12px rgba(0,0,0,.06);
-  z-index:60;
+  z-index:100;
 }
 
 .nav-btn{
   border:0;
-  background:white;
-  font-size:13px;
+  background:#fff;
+  color:#626b6a;
+  font-size:12px;
   font-weight:700;
-  color:#5e6867;
 }
 
 .nav-btn.active{
   color:#087f83;
-  background:#e8f6f3;
+  background:#e7f6f3;
 }
 
 .nav-icon{
   display:block;
-  font-size:23px;
+  font-size:22px;
   margin-bottom:2px;
+}
+
+@media(max-width:380px){
+  .container{padding:9px}
+  .order-card{padding:9px}
+  .page-name{font-size:13px}
+  .customer-text{font-size:13px}
 }
 </style>
 </head>
@@ -297,278 +412,231 @@ textarea{
 <body>
 
 <header class="header">
-  <button class="back" onclick="goHome()">‹</button>
+  <button class="back" type="button" onclick="goHome()">‹</button>
   <div class="header-title">All Order Group</div>
 </header>
 
 <main class="container">
 
-  <input
-    id="searchInput"
-    class="search"
-    type="search"
-    placeholder="নাম / মোবাইল / লোকেশন / Order No. দিয়ে Search"
-  >
+<input
+  id="searchInput"
+  class="search"
+  type="search"
+  placeholder="নাম / মোবাইল / লোকেশন / Order No. দিয়ে Search">
 
-  <section class="submit-card">
+<section class="submit-card">
 
-    <div class="submit-title">
-      নতুন অর্ডার সাবমিট
-    </div>
+<div class="submit-title">নতুন অর্ডার সাবমিট</div>
 
-    <div class="field">
-      <label class="label">Page</label>
+<label class="label">Page</label>
 
-      <select id="pageSelect">
-        <option value="">পেজ সিলেক্ট করুন</option>
-        <option value="Sehzadi online shop">Sehzadi online shop</option>
-        <option value="Abaya House">Abaya House</option>
-        <option value="Maya Borka House">Maya Borka House</option>
-        <option value="Mahira Fashion">Mahira Fashion</option>
-        <option value="Black Beauty Abaya">Black Beauty Abaya</option>
-      </select>
-    </div>
+<select id="pageSelect">
+  <option value="">পেজ সিলেক্ট করুন</option>
+  <option value="Sehzadi online shop">Sehzadi online shop</option>
+  <option value="Abaya House">Abaya House</option>
+  <option value="Maya Borka House">Maya Borka House</option>
+  <option value="Mahira Fashion">Mahira Fashion</option>
+  <option value="Black Beauty Abaya">Black Beauty Abaya</option>
+</select>
 
-    <div class="field">
-      <label class="label">
-        ছবি
-      </label>
+<label class="label">ছবি</label>
 
-      <div class="upload-box">
-        <input
-          id="imageInput"
-          type="file"
-          accept="image/*"
-          multiple
-        >
+<div class="upload">
 
-        <div class="hint">
-          কমপক্ষে ১টি, সর্বোচ্চ ৭টি ছবি
-        </div>
+<input
+  id="imageInput"
+  type="file"
+  accept="image/*"
+  multiple>
 
-        <div
-          id="imagePreview"
-          class="preview">
-        </div>
-      </div>
-    </div>
+<div class="upload-note">
+কমপক্ষে ১টি, সর্বোচ্চ ৭টি ছবি
+</div>
 
-    <div class="field">
-      <label class="label">
-        কাস্টমারের সম্পূর্ণ অর্ডার
-      </label>
+<div id="imagePreview" class="preview"></div>
 
-      <textarea
-        id="orderText"
-        placeholder="নাম, মোবাইল নাম্বার, ঠিকানা, লং/সাইজ, কালার, পরিমাণ, নোট—সব এখানে লিখুন"></textarea>
-    </div>
+</div>
 
-    <button
-      id="submitBtn"
-      class="submit-btn"
-      type="button">
-      অর্ডার সাবমিট
-    </button>
+<label class="label">কাস্টমারের সম্পূর্ণ অর্ডার</label>
 
-    <div
-      id="statusBox"
-      class="status">
-    </div>
+<textarea
+  id="orderText"
+  placeholder="নাম, মোবাইল নাম্বার, ঠিকানা, লং/সাইজ, কালার, পরিমাণ, নোট—সব এখানে লিখুন"></textarea>
 
-  </section>
+<button
+  id="submitBtn"
+  class="submit-btn"
+  type="button">
+অর্ডার সাবমিট
+</button>
 
+<div id="saveStatus" class="status-message"></div>
 
-  <div class="orders-title">
-    All Orders
-  </div>
+</section>
 
-  <div id="orderList">
-    <div class="empty">
-      Loading...
-    </div>
-  </div>
+<div class="list-title">All Orders</div>
+
+<div id="orderList">
+  <div class="empty">Loading...</div>
+</div>
 
 </main>
 
-
 <nav class="bottom-nav">
 
-  <button
-    class="nav-btn active"
-    onclick="goHome()">
-    <span class="nav-icon">📦</span>
-    Orders
-  </button>
+<button class="nav-btn active" onclick="goHome()">
+<span class="nav-icon">📦</span>
+Orders
+</button>
 
-  <button
-    class="nav-btn"
-    onclick="goCourier()">
-    <span class="nav-icon">🚚</span>
-    Courier
-  </button>
+<button class="nav-btn" onclick="goCourier()">
+<span class="nav-icon">🚚</span>
+Courier
+</button>
 
-  <button
-    class="nav-btn"
-    onclick="goSettings()">
-    <span class="nav-icon">⚙️</span>
-    Settings
-  </button>
+<button class="nav-btn" onclick="goSettings()">
+<span class="nav-icon">⚙️</span>
+Settings
+</button>
 
 </nav>
-
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./database.js"></script>
 
 <script>
+
 let selectedImages = [];
 let allOrders = [];
+
+
+/* ===============================
+NAVIGATION
+================================ */
+
+function goHome(){
+  window.location.href="../index.html";
+}
+
+function goCourier(){
+  window.location.href="./courier.html";
+}
+
+function goSettings(){
+  window.location.href="./settings.html";
+}
+
+
+/* ===============================
+IMAGE SELECT
+================================ */
 
 const imageInput =
   document.getElementById("imageInput");
 
-const imagePreview =
-  document.getElementById("imagePreview");
+imageInput.addEventListener("change",function(){
 
-const submitBtn =
-  document.getElementById("submitBtn");
+  const files =
+    Array.from(this.files || []);
 
-const statusBox =
-  document.getElementById("statusBox");
+  if(!files.length) return;
 
-const searchInput =
-  document.getElementById("searchInput");
+  const available =
+    7-selectedImages.length;
 
-
-function goHome(){
-  window.location.href = "../index.html";
-}
-
-function goCourier(){
-  window.location.href = "./courier.html";
-}
-
-function goSettings(){
-  window.location.href = "./settings.html";
-}
-
-
-/* IMAGE SELECT */
-
-imageInput.addEventListener(
-  "change",
-  function(){
-
-    const incoming =
-      Array.from(this.files || []);
-
-    if(!incoming.length){
-      return;
-    }
-
-    const remaining =
-      7 - selectedImages.length;
-
-    if(remaining <= 0){
-      alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
-      this.value = "";
-      return;
-    }
-
-    if(incoming.length > remaining){
-      alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
-    }
-
-    selectedImages.push(
-      ...incoming.slice(0, remaining)
-    );
-
-    this.value = "";
-
-    renderPreview();
+  if(available<=0){
+    alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
+    this.value="";
+    return;
   }
-);
+
+  if(files.length>available){
+    alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
+  }
+
+  selectedImages.push(
+    ...files.slice(0,available)
+  );
+
+  this.value="";
+
+  renderPreview();
+});
 
 
 function renderPreview(){
 
-  imagePreview.innerHTML = "";
+  const box =
+    document.getElementById("imagePreview");
 
-  selectedImages.forEach(
-    function(file,index){
+  box.innerHTML="";
 
-      const item =
-        document.createElement("div");
+  selectedImages.forEach((file,index)=>{
 
-      item.className =
-        "preview-item";
+    const item =
+      document.createElement("div");
 
-      const img =
-        document.createElement("img");
+    item.className="preview-item";
 
-      const url =
-        URL.createObjectURL(file);
+    const img =
+      document.createElement("img");
 
-      img.src = url;
+    const url =
+      URL.createObjectURL(file);
 
-      img.onload = function(){
-        URL.revokeObjectURL(url);
-      };
+    img.src=url;
 
-      const remove =
-        document.createElement("button");
+    img.onload=()=>{
+      URL.revokeObjectURL(url);
+    };
 
-      remove.type = "button";
-      remove.className = "remove-image";
-      remove.textContent = "×";
+    const remove =
+      document.createElement("button");
 
-      remove.onclick = function(){
+    remove.type="button";
+    remove.className="remove-image";
+    remove.textContent="×";
 
-        selectedImages.splice(
-          index,
-          1
-        );
+    remove.onclick=()=>{
 
-        renderPreview();
-      };
+      selectedImages.splice(index,1);
 
-      item.appendChild(img);
-      item.appendChild(remove);
+      renderPreview();
+    };
 
-      imagePreview.appendChild(item);
-    }
-  );
+    item.appendChild(img);
+    item.appendChild(remove);
+
+    box.appendChild(item);
+  });
 }
 
 
-/* SUBMIT */
+/* ===============================
+SUBMIT
+================================ */
 
-submitBtn.addEventListener(
-  "click",
-  submitOrder
-);
+document
+.getElementById("submitBtn")
+.addEventListener("click",submitOrder);
 
 
 async function submitOrder(){
 
   const page =
-    document
-      .getElementById("pageSelect")
-      .value
-      .trim();
+    document.getElementById("pageSelect")
+    .value.trim();
 
   const text =
-    document
-      .getElementById("orderText")
-      .value
-      .trim();
+    document.getElementById("orderText")
+    .value.trim();
 
   if(!page){
     alert("পেজ সিলেক্ট করুন।");
     return;
   }
 
-  if(selectedImages.length < 1){
+  if(selectedImages.length<1){
     alert("অন্তত ১টি ছবি দিন।");
     return;
   }
@@ -578,63 +646,41 @@ async function submitOrder(){
     return;
   }
 
-  /*
-    database.js অর্ডারের সম্পূর্ণ লেখা থেকে
-    ১১ সংখ্যার English মোবাইল নাম্বার বের করবে।
-  */
-
   if(!/01\d{9}/.test(text)){
     alert(
-      "অর্ডারের মধ্যে ১১ সংখ্যার English মোবাইল নাম্বার দিন।\nযেমন: 01712345678"
+      "অর্ডারের মধ্যে ১১ সংখ্যার English মোবাইল নাম্বার দিন।"
     );
     return;
   }
 
-  submitBtn.disabled = true;
-  submitBtn.textContent =
-    "সাবমিট হচ্ছে...";
+  const btn =
+    document.getElementById("submitBtn");
 
-  statusBox.textContent =
-    "অর্ডার Save হচ্ছে...";
+  const status =
+    document.getElementById("saveStatus");
+
+  btn.disabled=true;
+  btn.textContent="সাবমিট হচ্ছে...";
 
   try{
 
-    if(
-      !window.OrderDatabase ||
-      typeof window.OrderDatabase.save !== "function"
-    ){
-      throw new Error(
-        "Database module load হয়নি।"
-      );
-    }
-
     await window.OrderDatabase.save({
-      page: page,
-
-      /*
-        দুটো নামই পাঠানো হচ্ছে,
-        তাই পুরোনো/নতুন database.js উভয়ের
-        সঙ্গে compatibility থাকবে।
-      */
-      orderText: text,
-      customerText: text,
-
-      images: selectedImages,
-
-      submittedBy: "Admin",
-
-      moderatorWhatsapp: ""
+      page:page,
+      orderText:text,
+      customerText:text,
+      images:selectedImages,
+      submittedBy:"Admin",
+      moderatorWhatsapp:""
     });
 
-    statusBox.textContent =
+    status.textContent=
       "✓ অর্ডার সফলভাবে Save হয়েছে।";
 
-    document
-      .getElementById("orderText")
-      .value = "";
+    document.getElementById("orderText").value="";
 
-    selectedImages = [];
-    imagePreview.innerHTML = "";
+    selectedImages=[];
+
+    renderPreview();
 
     await loadOrders();
 
@@ -642,28 +688,24 @@ async function submitOrder(){
 
     console.error(error);
 
-    statusBox.textContent =
-      "✕ " +
-      (
-        error &&
-        error.message
-          ? error.message
-          : "অর্ডার Save হয়নি।"
-      );
+    const message =
+      error?.message || "অর্ডার Save হয়নি।";
 
-    alert(statusBox.textContent);
+    status.textContent="✕ "+message;
+
+    alert(message);
 
   }finally{
 
-    submitBtn.disabled = false;
-
-    submitBtn.textContent =
-      "অর্ডার সাবমিট";
+    btn.disabled=false;
+    btn.textContent="অর্ডার সাবমিট";
   }
 }
 
 
-/* LOAD ORDERS */
+/* ===============================
+LOAD ORDERS
+================================ */
 
 async function loadOrders(){
 
@@ -672,83 +714,67 @@ async function loadOrders(){
 
   try{
 
-    if(
-      !window.OrderDatabase ||
-      typeof window.OrderDatabase.loadAll !== "function"
-    ){
-      throw new Error(
-        "Database module load হয়নি।"
-      );
-    }
-
     allOrders =
       await window.OrderDatabase.loadAll();
 
-    renderOrders(
-      allOrders
-    );
+    renderOrders(allOrders);
 
   }catch(error){
 
     console.error(error);
 
-    list.innerHTML =
-      '<div class="empty">' +
-      escapeHtml(
-        error.message ||
-        "অর্ডার Load হয়নি।"
-      ) +
-      "</div>";
+    list.innerHTML=
+      '<div class="empty">'+
+      escapeHtml(error?.message || "অর্ডার Load হয়নি।")+
+      '</div>';
   }
 }
 
 
-/* SEARCH */
+/* ===============================
+SEARCH
+================================ */
 
-searchInput.addEventListener(
-  "input",
-  function(){
+document
+.getElementById("searchInput")
+.addEventListener("input",function(){
 
-    const query =
-      this.value
-        .trim()
-        .toLowerCase();
+  const q =
+    this.value.trim().toLowerCase();
 
-    if(!query){
+  if(!q){
 
-      renderOrders(
-        allOrders
-      );
+    renderOrders(allOrders);
 
-      return;
-    }
-
-    const filtered =
-      allOrders.filter(
-        function(order){
-
-          const text = [
-            order.order_no,
-            order.page_name,
-            order.customer_text,
-            order.order_text,
-            order.phone,
-            order.submitted_by
-          ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-
-          return text.includes(query);
-        }
-      );
-
-    renderOrders(filtered);
+    return;
   }
-);
+
+  const result =
+    allOrders.filter(order=>{
+
+      return [
+        order.order_no,
+        order.page_name,
+        order.customer_text,
+        order.order_text,
+        order.phone,
+        order.submitted_by,
+        order.moderator_whatsapp
+      ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase()
+      .includes(q);
+
+    });
+
+  renderOrders(result);
+});
 
 
-/* RENDER */
+/* ===============================
+RENDER
+================================ */
 
 function renderOrders(orders){
 
@@ -757,16 +783,14 @@ function renderOrders(orders){
 
   if(!orders || !orders.length){
 
-    list.innerHTML =
+    list.innerHTML=
       '<div class="empty">কোনো অর্ডার নেই।</div>';
 
     return;
   }
 
-  list.innerHTML =
-    orders
-      .map(createOrderCard)
-      .join("");
+  list.innerHTML=
+    orders.map(createOrderCard).join("");
 }
 
 
@@ -777,98 +801,473 @@ function createOrderCard(order){
     order.order_text ||
     "";
 
-  let images = [];
+  const images =
+    Array.isArray(order.images)
+      ? order.images
+      : (
+        Array.isArray(order.image_urls)
+          ? order.image_urls
+          : []
+      );
 
-  if(Array.isArray(order.images)){
-    images = order.images;
-  }
-  else if(Array.isArray(order.image_urls)){
-    images = order.image_urls;
-  }
+  const phone =
+    order.phone ||
+    extractPhone(text);
 
-  const orderNumber =
+  const orderNo =
     order.order_no ||
     String(order.id || "")
-      .slice(0,8)
-      .toUpperCase();
+    .slice(0,8)
+    .toUpperCase();
 
-  const date =
-    formatDateTime(
-      order.created_at
-    );
+  const page =
+    order.page_name || "";
 
-  const imagesHtml =
+  const submittedBy =
+    order.submitted_by || "Admin";
+
+  const moderatorWhatsApp =
+    order.moderator_whatsapp || "";
+
+  const emergency =
+    order.emergency === true;
+
+  const callStatus =
+    order.call_status || "not_called";
+
+  const tokenTime =
+    formatDateTime(order.created_at);
+
+  const callTime =
+    order.call_updated_at
+      ? formatDateTime(order.call_updated_at)
+      : "";
+
+  const imageHtml =
     images.length
-      ? (
-          '<div class="order-images">' +
-          images
-            .map(
-              url =>
-                '<img src="' +
-                escapeAttribute(url) +
-                '" loading="lazy" alt="Order image">'
-            )
-            .join("") +
-          "</div>"
-        )
+      ? `
+        <div class="order-images">
+        ${images.map(url=>`
+          <img
+            src="${escapeAttribute(url)}"
+            loading="lazy"
+            alt="Order image">
+        `).join("")}
+        </div>
+      `
       : "";
 
   return `
-    <article class="order-card">
+  <article
+    class="order-card"
+    id="order-${escapeAttribute(order.id)}">
 
-      <div class="order-top">
+    <div class="card-top">
 
-        <div class="order-number">
-          Order #${escapeHtml(orderNumber)}
+      <div>
+        <div class="page-name">
+          ${escapeHtml(page)}
         </div>
 
-        <div class="page-badge">
-          ${escapeHtml(order.page_name || "")}
+        <div class="info-line">
+          Submitted By:
+          <b>${escapeHtml(submittedBy)}</b>
         </div>
+
+        <div class="info-line">
+          Token Time:
+          ${escapeHtml(tokenTime)}
+        </div>
+
+        ${
+          moderatorWhatsApp
+          ? `
+          <div class="info-line whatsapp-info">
+            WhatsApp:
+            ${escapeHtml(moderatorWhatsApp)}
+          </div>
+          `
+          : ""
+        }
+      </div>
+
+      <div class="order-no">
+        #${escapeHtml(orderNo)}
+      </div>
+
+    </div>
+
+
+    <div class="action-row">
+
+      <button
+        class="mini-btn emergency-btn"
+        type="button"
+        onclick="toggleEmergency('${escapeJs(order.id)}',${emergency})">
+
+        ${emergency
+          ? "↩ Return Pending"
+          : "🚨 Emergency"}
+
+      </button>
+
+
+      <button
+        class="mini-btn fraud-btn"
+        type="button"
+        onclick="fraudCheck('${escapeJs(order.id)}')">
+
+        🛡 Fraud Check
+
+      </button>
+
+
+      <button
+        class="mini-btn delete-btn"
+        type="button"
+        onclick="deleteOrder('${escapeJs(order.id)}')">
+
+        🗑 Delete
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="fraud-result"
+      id="fraud-${escapeAttribute(order.id)}">
+    </div>
+
+
+    ${imageHtml}
+
+
+    <div class="customer-text">
+      ${escapeHtml(text)}
+    </div>
+
+
+    <div class="call-box">
+
+      <div>
+
+        <div class="call-status ${callStatus==="called" ? "called":"not-called"}">
+
+          ${
+            callStatus==="called"
+              ? "✓ Call Done"
+              : "● Call Not Done"
+          }
+
+        </div>
+
+        ${
+          callTime
+            ? `<div class="token">${escapeHtml(callTime)}</div>`
+            : ""
+        }
 
       </div>
 
-      ${imagesHtml}
 
-      <div class="order-text">${escapeHtml(text)}</div>
+      <button
+        class="call-btn"
+        type="button"
+        onclick="toggleCall('${escapeJs(order.id)}','${escapeJs(callStatus)}')">
 
-      <div class="meta">
-        Submitted By:
-        ${escapeHtml(order.submitted_by || "Admin")}
-        <br>
-        ${escapeHtml(date)}
-      </div>
+        ${
+          callStatus==="called"
+            ? "Not Done"
+            : "Call Done"
+        }
 
-    </article>
+      </button>
+
+    </div>
+
+
+    <div class="contact-row">
+
+      <button
+        class="contact-btn wa-btn"
+        type="button"
+        onclick="openWhatsApp('${escapeJs(phone)}')">
+
+        WhatsApp
+
+      </button>
+
+
+      <button
+        class="contact-btn phone-btn"
+        type="button"
+        onclick="callCustomer('${escapeJs(phone)}')">
+
+        📞 Call
+
+      </button>
+
+    </div>
+
+
+    <div class="bottom-status">
+
+      <span class="status-pill ${emergency ? "emergency":""}">
+        ${emergency ? "Emergency":"Pending"}
+      </span>
+
+      <span class="token">
+        ${escapeHtml(tokenTime)}
+      </span>
+
+    </div>
+
+  </article>
   `;
 }
 
 
-/* DATE TIME */
+/* ===============================
+EMERGENCY
+================================ */
+
+async function toggleEmergency(id,isEmergency){
+
+  try{
+
+    if(isEmergency){
+
+      if(
+        typeof window.OrderDatabase.removeEmergency
+        !== "function"
+      ){
+        throw new Error(
+          "Return Pending function পাওয়া যায়নি।"
+        );
+      }
+
+      await window.OrderDatabase.removeEmergency(id);
+
+    }else{
+
+      await window.OrderDatabase.emergency(id);
+    }
+
+    await loadOrders();
+
+  }catch(error){
+
+    alert(
+      error?.message ||
+      "Emergency update হয়নি।"
+    );
+  }
+}
+
+
+/* ===============================
+CALL STATUS
+================================ */
+
+async function toggleCall(id,currentStatus){
+
+  try{
+
+    const newStatus =
+      currentStatus==="called"
+        ? "not_called"
+        : "called";
+
+    await window.OrderDatabase.updateCall(
+      id,
+      newStatus
+    );
+
+    await loadOrders();
+
+  }catch(error){
+
+    alert(
+      error?.message ||
+      "Call status update হয়নি।"
+    );
+  }
+}
+
+
+/* ===============================
+WHATSAPP / CALL
+================================ */
+
+function openWhatsApp(phone){
+
+  if(!phone){
+
+    alert("মোবাইল নাম্বার পাওয়া যায়নি।");
+    return;
+  }
+
+  let number =
+    String(phone).replace(/\D/g,"");
+
+  if(number.startsWith("0")){
+    number="88"+number;
+  }
+
+  window.location.href=
+    "https://wa.me/"+number;
+}
+
+
+function callCustomer(phone){
+
+  if(!phone){
+
+    alert("মোবাইল নাম্বার পাওয়া যায়নি।");
+    return;
+  }
+
+  window.location.href=
+    "tel:"+String(phone).replace(/\D/g,"");
+}
+
+
+/* ===============================
+FRAUD CHECK
+================================ */
+
+function fraudCheck(id){
+
+  const order =
+    allOrders.find(
+      item=>String(item.id)===String(id)
+    );
+
+  if(!order) return;
+
+  const box =
+    document.getElementById(
+      "fraud-"+id
+    );
+
+  if(!box) return;
+
+  const phone =
+    order.phone ||
+    extractPhone(
+      order.customer_text ||
+      order.order_text ||
+      ""
+    );
+
+  const internalCount =
+    allOrders.filter(item=>{
+
+      const p =
+        item.phone ||
+        extractPhone(
+          item.customer_text ||
+          item.order_text ||
+          ""
+        );
+
+      return phone && p===phone;
+
+    }).length;
+
+  box.style.display="block";
+
+  box.innerHTML=
+    "<b>Fraud Check</b><br>"+
+    "মোবাইল: "+
+    escapeHtml(phone || "পাওয়া যায়নি")+
+    "<br>Internal order history: "+
+    internalCount+
+    " টি";
+
+  /*
+    Courier API যুক্ত হলে এখানেই
+    courier fraud history যোগ হবে।
+  */
+}
+
+
+/* ===============================
+DELETE
+================================ */
+
+async function deleteOrder(id){
+
+  const reason =
+    prompt(
+      "Delete করার কারণ লিখুন:"
+    );
+
+  if(reason===null) return;
+
+  if(!reason.trim()){
+
+    alert("Delete reason লিখুন।");
+    return;
+  }
+
+  const confirmed =
+    confirm(
+      "এই অর্ডার Delete করতে চান?"
+    );
+
+  if(!confirmed) return;
+
+  try{
+
+    await window.OrderDatabase.delete(id);
+
+    await loadOrders();
+
+  }catch(error){
+
+    alert(
+      error?.message ||
+      "Delete হয়নি।"
+    );
+  }
+}
+
+
+/* ===============================
+HELPERS
+================================ */
+
+function extractPhone(text){
+
+  const match =
+    String(text || "")
+    .match(/01\d{9}/);
+
+  return match
+    ? match[0]
+    : "";
+}
+
 
 function formatDateTime(value){
 
-  if(!value){
-    return "";
-  }
+  if(!value) return "";
 
-  const date =
+  const d =
     new Date(value);
 
-  if(
-    Number.isNaN(
-      date.getTime()
-    )
-  ){
+  if(Number.isNaN(d.getTime())){
     return "";
   }
 
-  return date.toLocaleString(
+  return d.toLocaleString(
     "en-BD",
     {
-      year:"numeric",
-      month:"2-digit",
       day:"2-digit",
+      month:"2-digit",
+      year:"numeric",
       hour:"numeric",
       minute:"2-digit",
       hour12:true
@@ -877,18 +1276,14 @@ function formatDateTime(value){
 }
 
 
-/* SAFE HTML */
-
 function escapeHtml(value){
 
-  return String(
-    value ?? ""
-  )
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
@@ -897,13 +1292,24 @@ function escapeAttribute(value){
 }
 
 
-/* REALTIME */
+function escapeJs(value){
+
+  return String(value ?? "")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
+}
+
+
+/* ===============================
+REALTIME
+================================ */
 
 function startRealtime(){
 
   if(
     window.OrderDatabase &&
-    typeof window.OrderDatabase.realtime === "function"
+    typeof window.OrderDatabase.realtime
+    === "function"
   ){
 
     window.OrderDatabase.realtime(
@@ -917,7 +1323,9 @@ function startRealtime(){
 }
 
 
-/* START */
+/* ===============================
+START
+================================ */
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -926,8 +1334,16 @@ document.addEventListener(
     try{
 
       if(
-        window.OrderDatabase &&
-        typeof window.OrderDatabase.init === "function"
+        !window.OrderDatabase
+      ){
+        throw new Error(
+          "database.js load হয়নি।"
+        );
+      }
+
+      if(
+        typeof window.OrderDatabase.init
+        === "function"
       ){
         window.OrderDatabase.init();
       }
@@ -939,6 +1355,16 @@ document.addEventListener(
     }catch(error){
 
       console.error(error);
+
+      document.getElementById(
+        "orderList"
+      ).innerHTML=
+        '<div class="empty">'+
+        escapeHtml(
+          error?.message ||
+          "Database load হয়নি।"
+        )+
+        '</div>';
     }
 
   }
