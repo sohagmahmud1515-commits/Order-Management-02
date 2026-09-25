@@ -15,477 +15,185 @@ body{
   color:#173f43;
   padding-bottom:68px;
 }
-
-/* HEADER */
 .topbar{
-  height:72px;
-  background:#137b80;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  padding:0 14px;
-  position:sticky;
-  top:0;
-  z-index:50;
+  height:72px;background:#137b80;color:#fff;
+  display:flex;align-items:center;padding:0 14px;
+  position:sticky;top:0;z-index:50;
 }
-.top-title{
-  font-size:20px;
-  font-weight:800;
-  white-space:nowrap;
-}
-.core{
-  font-size:9px;
-  font-weight:800;
-  margin-left:5px;
-}
-.top-actions{
-  margin-left:auto;
-  display:flex;
-  gap:6px;
-}
+.top-title{font-size:20px;font-weight:800;white-space:nowrap}
+.core{font-size:9px;font-weight:800;margin-left:5px}
+.top-actions{margin-left:auto;display:flex;gap:6px}
 .top-btn{
-  width:43px;
-  height:43px;
-  border:0;
-  border-radius:12px;
-  background:rgba(255,255,255,.14);
-  font-size:22px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:43px;height:43px;border:0;border-radius:12px;
+  background:rgba(255,255,255,.14);font-size:22px;
+  display:flex;align-items:center;justify-content:center;
 }
-
-/* PAGE */
-.page{
-  max-width:650px;
-  margin:auto;
-  padding:16px 12px 15px;
-}
-
-/* SEARCH */
-.search-title{
-  font-size:17px;
-  font-weight:800;
-  margin-bottom:8px;
-  color:#286a70;
-}
+.page{max-width:650px;margin:auto;padding:16px 12px 15px}
+.search-title{font-size:17px;font-weight:800;margin-bottom:8px;color:#286a70}
 .search-box{
-  height:56px;
-  border:2px solid #58a6aa;
-  background:#fff;
-  border-radius:18px;
-  display:flex;
-  align-items:center;
-  padding:0 13px;
-  box-shadow:0 5px 12px rgba(20,100,105,.07);
+  height:56px;border:2px solid #58a6aa;background:#fff;
+  border-radius:18px;display:flex;align-items:center;
+  padding:0 13px;box-shadow:0 5px 12px rgba(20,100,105,.07);
 }
-.search-icon{
-  font-size:21px;
-  color:#27858a;
-  margin-right:9px;
-}
+.search-icon{font-size:21px;color:#27858a;margin-right:9px}
 .search-box input{
-  flex:1;
-  border:0;
-  outline:0;
-  font-size:15px;
-  min-width:0;
-  color:#37474a;
+  flex:1;border:0;outline:0;font-size:15px;min-width:0;color:#37474a;
 }
 .search-box input::placeholder{color:#9ca5a7}
 .clear-btn{
-  width:34px;
-  height:34px;
-  border:0;
-  border-radius:50%;
-  background:#edf5f5;
-  color:#628287;
-  font-size:20px;
-  font-weight:bold;
+  width:34px;height:34px;border:0;border-radius:50%;
+  background:#edf5f5;color:#628287;font-size:20px;font-weight:bold;
 }
-
-/* NEW ORDER */
-.new-wrap{
-  position:relative;
-  margin-top:20px;
-}
+.new-wrap{position:relative;margin-top:20px}
 .new-label{
-  position:absolute;
-  top:-10px;
-  left:20px;
-  background:#16969a;
-  color:#fff;
-  padding:5px 12px;
-  border-radius:15px;
-  font-size:10px;
-  font-weight:800;
-  z-index:2;
+  position:absolute;top:-10px;left:20px;background:#16969a;
+  color:#fff;padding:5px 12px;border-radius:15px;
+  font-size:10px;font-weight:800;z-index:2;
 }
 .new-head{
-  min-height:82px;
-  border:2px solid #1ca397;
-  border-radius:22px;
-  display:flex;
-  align-items:center;
-  padding:12px 14px;
-  background:#f5fcfb;
-  cursor:pointer;
+  min-height:82px;border:2px solid #1ca397;border-radius:22px;
+  display:flex;align-items:center;padding:12px 14px;
+  background:#f5fcfb;cursor:pointer;
 }
 .plus-box{
-  width:58px;
-  height:58px;
-  flex:0 0 58px;
-  border-radius:17px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:58px;height:58px;flex:0 0 58px;border-radius:17px;
+  display:flex;align-items:center;justify-content:center;
   background:linear-gradient(145deg,#1aa99d,#1493b0);
-  color:#fff;
-  font-size:39px;
-  font-weight:300;
+  color:#fff;font-size:39px;font-weight:300;
 }
-.new-text{
-  font-size:18px;
-  font-weight:800;
-  margin-left:12px;
-  flex:1;
-}
+.new-text{font-size:18px;font-weight:800;margin-left:12px;flex:1}
 .drop-btn{
-  width:39px;
-  height:39px;
-  border:1px solid #b9dfda;
-  background:#dcf4ef;
-  border-radius:13px;
-  font-size:20px;
-  color:#087c75;
-  font-weight:bold;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:.2s;
+  width:39px;height:39px;border:1px solid #b9dfda;
+  background:#dcf4ef;border-radius:13px;font-size:20px;
+  color:#087c75;font-weight:bold;display:flex;
+  align-items:center;justify-content:center;transition:.2s;
 }
 .new-wrap.open .drop-btn{transform:rotate(180deg)}
-
-/* SUBMIT PANEL */
 .submit-panel{
-  display:none;
-  margin-top:22px;
-  padding:22px 12px 14px;
-  border:2px solid #b9e3df;
-  border-radius:20px;
-  background:#fff;
+  display:none;margin-top:22px;padding:22px 12px 14px;
+  border:2px solid #b9e3df;border-radius:20px;background:#fff;
   box-shadow:0 5px 15px rgba(18,119,125,.05);
 }
 .new-wrap.open .submit-panel{display:block}
-
 .select-page{
-  width:100%;
-  height:54px;
-  border:2px solid #1d9993;
-  border-radius:16px;
-  background:#fff;
-  padding:0 15px;
-  font-size:16px;
-  color:#435c60;
-  outline:none;
+  width:100%;height:54px;border:2px solid #1d9993;
+  border-radius:16px;background:#fff;padding:0 15px;
+  font-size:16px;color:#435c60;outline:none;
 }
-
 .upload-box{
-  margin-top:14px;
-  min-height:88px;
-  border:2px dashed #8dc9c4;
-  border-radius:18px;
-  background:#f0fbfa;
-  display:flex;
-  align-items:center;
-  padding:13px;
-  cursor:pointer;
+  margin-top:14px;min-height:88px;border:2px dashed #8dc9c4;
+  border-radius:18px;background:#f0fbfa;display:flex;
+  align-items:center;padding:13px;cursor:pointer;
 }
 .upload-plus{
-  width:58px;
-  height:58px;
-  flex:0 0 58px;
-  background:#dff5f2;
-  border-radius:17px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:39px;
-  color:#129c98;
+  width:58px;height:58px;flex:0 0 58px;background:#dff5f2;
+  border-radius:17px;display:flex;align-items:center;
+  justify-content:center;font-size:39px;color:#129c98;
 }
-.upload-text{
-  font-size:17px;
-  font-weight:800;
-  margin-left:14px;
-}
+.upload-text{font-size:17px;font-weight:800;margin-left:14px}
 #imageInput{display:none}
-
 .preview-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px;
-  margin-top:8px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:6px;margin-top:8px;
 }
 .preview-item{
-  position:relative;
-  aspect-ratio:1/1;
-  border-radius:10px;
-  overflow:hidden;
-  background:#eee;
+  position:relative;aspect-ratio:1/1;border-radius:10px;
+  overflow:hidden;background:#eee;
 }
-.preview-item img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+.preview-item img{width:100%;height:100%;object-fit:cover}
 .remove-image{
-  position:absolute;
-  right:3px;
-  top:3px;
-  width:25px;
-  height:25px;
-  border:0;
-  border-radius:50%;
-  background:#d93b3b;
-  color:#fff;
-  font-weight:bold;
+  position:absolute;right:3px;top:3px;width:25px;height:25px;
+  border:0;border-radius:50%;background:#d93b3b;color:#fff;font-weight:bold;
 }
-
-.order-label{
-  display:block;
-  margin:15px 0 8px;
-  font-size:16px;
-  font-weight:800;
-}
+.order-label{display:block;margin:15px 0 8px;font-size:16px;font-weight:800}
 .order-text{
-  width:100%;
-  height:155px;
-  min-height:155px;
-  resize:vertical;
-  border:2px solid #b5d4d2;
-  border-radius:16px;
-  padding:13px;
-  outline:0;
-  font-size:15px;
-  line-height:1.5;
-  font-family:inherit;
+  width:100%;height:155px;min-height:155px;resize:vertical;
+  border:2px solid #b5d4d2;border-radius:16px;
+  padding:13px;outline:0;font-size:15px;line-height:1.5;font-family:inherit;
 }
 .submit-btn{
-  width:100%;
-  height:54px;
-  border:0;
-  border-radius:17px;
-  margin-top:14px;
-  background:linear-gradient(90deg,#129b91,#148e9d);
-  color:#fff;
-  font-size:17px;
-  font-weight:800;
-  cursor:pointer;
+  width:100%;height:54px;border:0;border-radius:17px;
+  margin-top:14px;background:linear-gradient(90deg,#129b91,#148e9d);
+  color:#fff;font-size:17px;font-weight:800;cursor:pointer;
 }
-
-/* OLD ORDERS */
-.old-title{
-  margin:20px 4px 3px;
-  font-size:17px;
-  font-weight:800;
+.submit-btn:disabled{opacity:.55;cursor:not-allowed}
+.old-title{margin:20px 4px 3px;font-size:17px;font-weight:800}
+.old-sub{margin:0 4px 12px;color:#8b9b9e;font-size:13px}
+.loading{
+  text-align:center;padding:22px;color:#68898c;font-size:14px;
 }
-.old-sub{
-  margin:0 4px 12px;
-  color:#8b9b9e;
-  font-size:13px;
-}
-
-/* ORDER CARD */
 .order-card{
-  background:#fff;
-  border-radius:18px;
-  overflow:hidden;
+  background:#fff;border-radius:18px;overflow:hidden;
   border-top:6px solid #14868a;
-  box-shadow:0 4px 12px rgba(0,0,0,.05);
-  margin-bottom:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);margin-bottom:15px;
 }
 .order-image{
-  width:76%;
-  height:205px;
-  margin:6px auto 7px;
-  border-radius:12px;
-  background:#f1f4f3;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#9ba6a6;
-  overflow:hidden;
+  width:76%;height:205px;margin:6px auto 7px;border-radius:12px;
+  background:#f1f4f3;display:flex;align-items:center;
+  justify-content:center;color:#9ba6a6;overflow:hidden;
 }
-.order-image img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-.card-body{
-  padding:0 11px 14px;
-}
-.order-no{
-  font-size:18px;
-  font-weight:800;
-  color:#08777b;
-  margin:6px 0 8px;
-}
-
-/* INFO */
+.order-image img{width:100%;height:100%;object-fit:contain}
+.card-body{padding:0 11px 14px}
+.order-no{font-size:18px;font-weight:800;color:#08777b;margin:6px 0 8px}
 .info-box{
-  display:grid;
-  grid-template-columns:1.15fr 1.1fr .85fr 1.5fr;
-  background:#f2fbfa;
-  border:1px solid #c5e2df;
-  border-radius:14px;
-  padding:7px 4px;
+  display:grid;grid-template-columns:1.15fr 1.1fr .85fr 1.5fr;
+  background:#f2fbfa;border:1px solid #c5e2df;
+  border-radius:14px;padding:7px 4px;
 }
-.info-item{
-  min-width:0;
-  padding:0 4px;
-  border-right:1px solid #d5e7e5;
-}
+.info-item{min-width:0;padding:0 4px;border-right:1px solid #d5e7e5}
 .info-item:last-child{border-right:0}
-.info-label{
-  font-size:9px;
-  color:#617477;
-  margin-bottom:2px;
-}
+.info-label{font-size:9px;color:#617477;margin-bottom:2px}
 .info-value{
-  font-size:10px;
-  font-weight:700;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  font-size:10px;font-weight:700;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;
 }
 .whatsapp-mini{
-  border:1px solid #42b978;
-  color:#178d55;
-  border-radius:13px;
-  text-align:center;
-  padding:4px 2px;
-  font-size:9px;
-  font-weight:700;
+  border:1px solid #42b978;color:#178d55;border-radius:13px;
+  text-align:center;padding:4px 2px;font-size:9px;font-weight:700;
 }
-
-/* CARD ACTIONS */
 .card-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:6px;
-  margin-top:8px;
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:6px;margin-top:8px;
 }
 .action{
-  border:0;
-  border-radius:18px;
-  height:38px;
-  font-weight:800;
-  font-size:11px;
-  padding:0 4px;
+  border:0;border-radius:18px;height:38px;
+  font-weight:800;font-size:11px;padding:0 4px;
 }
 .emergency{background:#fff0ef;color:#d53d3d}
 .fraud{background:#edf8ff;color:#2378a0}
 .delete{background:#f2f3f5;color:#677079}
-
-.call-row{
-  display:flex;
-  justify-content:flex-end;
-  margin-top:7px;
-}
+.call-row{display:flex;justify-content:flex-end;margin-top:7px}
 .call-btn{
-  min-width:135px;
-  height:43px;
-  border:1px solid #d5dcde;
-  border-radius:13px;
-  background:#f5f6f7;
-  font-size:12px;
-  font-weight:700;
-  color:#60696d;
+  min-width:135px;height:43px;border:1px solid #d5dcde;
+  border-radius:13px;background:#f5f6f7;font-size:12px;
+  font-weight:700;color:#60696d;
 }
-
 .customer{
-  font-size:15px;
-  line-height:1.5;
-  margin-top:10px;
-  color:#333;
-  white-space:pre-line;
+  font-size:15px;line-height:1.5;margin-top:10px;
+  color:#333;white-space:pre-line;overflow-wrap:anywhere;
 }
-
-.extra-info{
-  margin-top:18px;
-  font-size:15px;
-  line-height:1.5;
-  color:#333;
-}
-.quick-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin-top:16px;
-}
+.quick-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
 .quick{
-  border:0;
-  padding:7px 11px;
-  border-radius:16px;
-  font-size:11px;
-  font-weight:800;
+  border:0;padding:7px 11px;border-radius:16px;
+  font-size:11px;font-weight:800;
 }
 .qwa{background:#e7f9ef;color:#168c52}
 .qcall{background:#eaf4ff;color:#2775a4}
 .qpending{background:#fff4cf;color:#a46a00}
 .qemergency{background:#ffe8e7;color:#d23737}
-
-.edit-btn{
-  margin-top:10px;
-  width:48px;
-  height:48px;
-  border:0;
-  border-radius:50%;
-  background:#fff2b8;
-  font-size:20px;
-}
-
-/* EMPTY */
-.empty{
-  display:none;
-  text-align:center;
-  color:#87999b;
-  padding:25px 10px;
-}
-
-/* BOTTOM NAV */
+.empty{display:none;text-align:center;color:#87999b;padding:25px 10px}
 .bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:68px;
-  background:#fff;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  border-top:1px solid #e5eeee;
-  z-index:60;
+  position:fixed;bottom:0;left:0;right:0;height:68px;
+  background:#fff;display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid #e5eeee;z-index:60;
 }
 .nav-item{
-  border:0;
-  background:#fff;
-  font-size:11px;
-  font-weight:700;
-  color:#657174;
+  border:0;background:#fff;font-size:11px;font-weight:700;color:#657174;
 }
-.nav-item span{
-  display:block;
-  font-size:22px;
-  margin-bottom:1px;
-}
+.nav-item span{display:block;font-size:22px;margin-bottom:1px}
 .nav-item.active{
-  background:#e9f8f6;
-  color:#0d7f7d;
-  border-radius:16px;
-  margin:5px;
+  background:#e9f8f6;color:#0d7f7d;border-radius:16px;margin:5px;
 }
-
-/* VERY SMALL PHONE */
 @media(max-width:380px){
   .top-title{font-size:18px}
   .top-btn{width:39px;height:39px;font-size:20px}
@@ -564,10 +272,7 @@ body{
         onchange="handleImages(event)"
       >
 
-      <div
-        class="preview-grid"
-        id="previewGrid"
-      ></div>
+      <div class="preview-grid" id="previewGrid"></div>
 
       <label class="order-label" for="orderText">
         📝 কাস্টমারের সম্পূর্ণ অর্ডার
@@ -581,6 +286,7 @@ body{
 
       <button
         class="submit-btn"
+        id="submitBtn"
         type="button"
         onclick="submitOrder()"
       >
@@ -593,142 +299,11 @@ body{
   <div class="old-title">আগের সব অর্ডার</div>
   <div class="old-sub">Order serial অনুযায়ী</div>
 
-  <div id="orderList">
-
-    <article
-      class="order-card"
-      data-search="02 Abaya House Admin রুশনা 01313725383 সুনামগঞ্জ"
-    >
-
-      <div class="order-image">
-        অর্ডারের ছবি
-      </div>
-
-      <div class="card-body">
-
-        <div class="order-no">
-          অর্ডার নাম্বার 02
-        </div>
-
-        <div class="info-box">
-
-          <div class="info-item">
-            <div class="info-label">Page</div>
-            <div class="info-value">🏬 Abaya House</div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-label">Submitted By</div>
-            <div class="info-value">👤 Admin</div>
-          </div>
-
-          <div class="info-item">
-            <div class="info-label">Token Time</div>
-            <div class="info-value">🕒 11:55 AM</div>
-            <div class="info-value">25/09/2026</div>
-          </div>
-
-          <div class="info-item">
-            <div
-              class="info-label"
-              style="text-align:center"
-            >
-              WhatsApp
-            </div>
-
-            <div class="whatsapp-mini">
-              🟢 নম্বর যোগ করুন
-            </div>
-          </div>
-
-        </div>
-
-        <div class="card-actions">
-
-          <button
-            class="action emergency"
-            type="button"
-          >
-            🚨 Return Pending
-          </button>
-
-          <button
-            class="action fraud"
-            type="button"
-          >
-            🛡 Fraud Check
-          </button>
-
-          <button
-            class="action delete"
-            type="button"
-          >
-            🗑 Delete
-          </button>
-
-        </div>
-
-        <div class="call-row">
-          <button class="call-btn" type="button">
-            📞 কল হয়নি
-          </button>
-        </div>
-
-        <div class="customer">নাম রুশনা।
-জেলা সুনামগঞ্জ। থানা শান্তিগঞ্জ। ইউনিয়ন পাথারিয়া বাজার।
-গ্রাম পুরান জাহান পুরা। মোবাইল নাম্বার 01313725383
-লং সাইজ 52।</div>
-
-        <div class="extra-info">
-          Full set :1950+150<br>
-          Total:2100
-          <br><br>
-          Maya ✅✅
-        </div>
-
-        <div class="quick-row">
-
-          <button
-            class="quick qwa"
-            type="button"
-          >
-            🟢 WhatsApp
-          </button>
-
-          <button
-            class="quick qcall"
-            type="button"
-          >
-            📞 Call
-          </button>
-
-          <button
-            class="quick qpending"
-            type="button"
-          >
-            Pending
-          </button>
-
-          <button
-            class="quick qemergency"
-            type="button"
-          >
-            🚨 Order sent to Emergency
-          </button>
-
-        </div>
-
-        <button
-          class="edit-btn"
-          type="button"
-        >
-          ✎
-        </button>
-
-      </div>
-    </article>
-
+  <div id="loadingState" class="loading">
+    অর্ডার লোড হচ্ছে...
   </div>
+
+  <div id="orderList"></div>
 
   <div class="empty" id="emptyState">
     কোনো অর্ডার পাওয়া যায়নি
@@ -737,55 +312,142 @@ body{
 </main>
 
 <nav class="bottom-nav">
-
   <button class="nav-item active" type="button">
-    <span>📦</span>
-    Orders
+    <span>📦</span>Orders
   </button>
 
   <button class="nav-item" type="button">
-    <span>🚚</span>
-    Courier
+    <span>🚚</span>Courier
   </button>
 
   <button class="nav-item" type="button">
-    <span>⚙️</span>
-    Settings
+    <span>⚙️</span>Settings
   </button>
-
 </nav>
+
+<!-- Supabase JavaScript Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Database Module -->
+<script src="./database.js"></script>
 
 <script>
 
 let selectedImages = [];
+let currentOrders = [];
 
-/* NEW ORDER OPEN/CLOSE */
+/* =========================
+   HELPERS
+========================= */
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function formatDateTime(value){
+
+  if(!value){
+    return {
+      time:"",
+      date:""
+    };
+  }
+
+  const d = new Date(value);
+
+  if(Number.isNaN(d.getTime())){
+    return {
+      time:"",
+      date:""
+    };
+  }
+
+  const time = d.toLocaleTimeString(
+    "en-US",
+    {
+      hour:"numeric",
+      minute:"2-digit",
+      hour12:true
+    }
+  );
+
+  const date =
+    String(d.getDate()).padStart(2,"0") +
+    "/" +
+    String(d.getMonth()+1).padStart(2,"0") +
+    "/" +
+    d.getFullYear();
+
+  return {time,date};
+}
+
+function shortOrderNo(order,index){
+
+  if(order && order.id){
+    const clean =
+      String(order.id)
+        .replace(/[^a-zA-Z0-9]/g,"");
+
+    if(clean.length >= 6){
+      return clean.slice(-6).toUpperCase();
+    }
+  }
+
+  return String(index + 1).padStart(2,"0");
+}
+
+
+/* =========================
+   NEW ORDER OPEN/CLOSE
+========================= */
+
 function toggleNewOrder(){
+
   document
     .getElementById("newWrap")
     .classList
     .toggle("open");
 }
 
-/* IMAGE SELECT */
+
+/* =========================
+   IMAGE SELECT
+========================= */
+
 function handleImages(event){
 
   const incoming =
-    Array.from(event.target.files || []);
+    Array.from(
+      event.target.files || []
+    );
 
-  if(!incoming.length) return;
+  if(!incoming.length){
+    return;
+  }
 
   const remaining =
     7 - selectedImages.length;
 
   if(remaining <= 0){
-    alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
+
+    alert(
+      "সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।"
+    );
+
     event.target.value = "";
     return;
   }
 
   if(incoming.length > remaining){
-    alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
+
+    alert(
+      "সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।"
+    );
   }
 
   selectedImages.push(
@@ -797,106 +459,749 @@ function handleImages(event){
   event.target.value = "";
 }
 
-/* IMAGE PREVIEW */
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
 function renderPreviews(){
 
   const grid =
-    document.getElementById("previewGrid");
+    document.getElementById(
+      "previewGrid"
+    );
 
   grid.innerHTML = "";
 
-  selectedImages.forEach((file,index)=>{
+  selectedImages.forEach(
+    (file,index)=>{
 
-    const item =
-      document.createElement("div");
+      const item =
+        document.createElement(
+          "div"
+        );
 
-    item.className = "preview-item";
+      item.className =
+        "preview-item";
 
-    const img =
-      document.createElement("img");
+      const img =
+        document.createElement(
+          "img"
+        );
 
-    img.alt = "Order image";
+      img.alt =
+        "Order image";
 
-    const reader =
-      new FileReader();
+      const reader =
+        new FileReader();
 
-    reader.onload = e=>{
-      img.src = e.target.result;
-    };
+      reader.onload = e=>{
+        img.src =
+          e.target.result;
+      };
 
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(
+        file
+      );
 
-    const remove =
-      document.createElement("button");
+      const remove =
+        document.createElement(
+          "button"
+        );
 
-    remove.type = "button";
-    remove.className = "remove-image";
-    remove.textContent = "×";
+      remove.type =
+        "button";
 
-    remove.onclick = ()=>{
+      remove.className =
+        "remove-image";
 
-      selectedImages.splice(index,1);
+      remove.textContent =
+        "×";
 
-      renderPreviews();
-    };
+      remove.onclick = ()=>{
 
-    item.appendChild(img);
-    item.appendChild(remove);
+        selectedImages.splice(
+          index,
+          1
+        );
 
-    grid.appendChild(item);
-  });
-}
+        renderPreviews();
+      };
 
-/* SUBMIT VALIDATION */
-function submitOrder(){
+      item.appendChild(img);
+      item.appendChild(remove);
 
-  const page =
-    document
-      .getElementById("pageSelect")
-      .value;
-
-  const text =
-    document
-      .getElementById("orderText")
-      .value
-      .trim();
-
-  if(!page){
-    alert("পেজ সিলেক্ট করুন।");
-    return;
-  }
-
-  if(selectedImages.length < 1){
-    alert("অন্তত ১টি ছবি যুক্ত করুন।");
-    return;
-  }
-
-  if(!text){
-    alert(
-      "কাস্টমারের সম্পূর্ণ অর্ডার লিখুন বা Paste করুন।"
-    );
-    return;
-  }
-
-  alert(
-    "ফর্ম ঠিক আছে। Database Module যুক্ত হলে এই অর্ডার All Order + Pending Group-এ Save হবে।"
+      grid.appendChild(item);
+    }
   );
 }
 
-/* SEARCH */
+
+/* =========================
+   SUBMIT ORDER
+========================= */
+
+async function submitOrder(){
+
+  const page =
+    document
+      .getElementById(
+        "pageSelect"
+      )
+      .value
+      .trim();
+
+  const text =
+    document
+      .getElementById(
+        "orderText"
+      )
+      .value
+      .trim();
+
+  const button =
+    document.getElementById(
+      "submitBtn"
+    );
+
+
+  if(!page){
+
+    alert(
+      "পেজ সিলেক্ট করুন।"
+    );
+
+    return;
+  }
+
+
+  if(selectedImages.length < 1){
+
+    alert(
+      "অন্তত ১টি ছবি যুক্ত করুন।"
+    );
+
+    return;
+  }
+
+
+  if(!text){
+
+    alert(
+      "কাস্টমারের সম্পূর্ণ অর্ডার লিখুন বা Paste করুন।"
+    );
+
+    return;
+  }
+
+
+  if(
+    !window.OrderDatabase ||
+    typeof window.OrderDatabase.save !== "function"
+  ){
+
+    alert(
+      "Database Module load হয়নি।"
+    );
+
+    return;
+  }
+
+
+  const originalText =
+    button.innerHTML;
+
+  button.disabled = true;
+
+  button.innerHTML =
+    "⏳ অর্ডার Save হচ্ছে...";
+
+
+  try{
+
+    const savedOrder =
+      await window.OrderDatabase.save({
+
+        page: page,
+
+        orderText: text,
+
+        images:
+          selectedImages,
+
+        submittedBy:
+          "Admin",
+
+        moderatorWhatsapp:
+          ""
+
+      });
+
+
+    /* RESET FORM */
+
+    document
+      .getElementById(
+        "pageSelect"
+      )
+      .value = "";
+
+    document
+      .getElementById(
+        "orderText"
+      )
+      .value = "";
+
+    selectedImages = [];
+
+    renderPreviews();
+
+
+    /* CLOSE FORM */
+
+    document
+      .getElementById(
+        "newWrap"
+      )
+      .classList
+      .remove("open");
+
+
+    /* IMMEDIATELY SHOW SAVED ORDER */
+
+    if(savedOrder){
+
+      const exists =
+        currentOrders.some(
+          order =>
+            order.id === savedOrder.id
+        );
+
+      if(!exists){
+
+        currentOrders.unshift(
+          savedOrder
+        );
+      }
+
+      renderOrders(
+        currentOrders
+      );
+    }
+
+
+    alert(
+      "অর্ডার সফলভাবে Save হয়েছে। All Order + Pending Group-এ যুক্ত হয়েছে।"
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Submit error:",
+      error
+    );
+
+    alert(
+      "অর্ডার Save হয়নি।\n\n" +
+      (
+        error &&
+        error.message
+          ? error.message
+          : "Unknown error"
+      )
+    );
+
+  }finally{
+
+    button.disabled =
+      false;
+
+    button.innerHTML =
+      originalText;
+  }
+}
+
+
+/* =========================
+   LOAD ORDERS
+========================= */
+
+async function loadOrders(){
+
+  const loading =
+    document.getElementById(
+      "loadingState"
+    );
+
+  loading.style.display =
+    "block";
+
+
+  try{
+
+    if(
+      !window.OrderDatabase ||
+      typeof window.OrderDatabase.loadAll !== "function"
+    ){
+
+      throw new Error(
+        "Database Module load হয়নি।"
+      );
+    }
+
+
+    currentOrders =
+      await window.OrderDatabase.loadAll();
+
+
+    renderOrders(
+      currentOrders
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Load error:",
+      error
+    );
+
+    document
+      .getElementById(
+        "orderList"
+      )
+      .innerHTML =
+        '<div class="loading">অর্ডার লোড করা যায়নি।</div>';
+
+  }finally{
+
+    loading.style.display =
+      "none";
+  }
+}
+
+
+/* =========================
+   RENDER ORDERS
+========================= */
+
+function renderOrders(orders){
+
+  const list =
+    document.getElementById(
+      "orderList"
+    );
+
+  const empty =
+    document.getElementById(
+      "emptyState"
+    );
+
+  list.innerHTML = "";
+
+
+  if(
+    !Array.isArray(orders) ||
+    orders.length === 0
+  ){
+
+    empty.style.display =
+      "block";
+
+    return;
+  }
+
+
+  empty.style.display =
+    "none";
+
+
+  orders.forEach(
+    (order,index)=>{
+
+      const article =
+        document.createElement(
+          "article"
+        );
+
+      article.className =
+        "order-card";
+
+      const orderNumber =
+        shortOrderNo(
+          order,
+          index
+        );
+
+      const dt =
+        formatDateTime(
+          order.created_at
+        );
+
+      const page =
+        escapeHtml(
+          order.page_name || ""
+        );
+
+      const submittedBy =
+        escapeHtml(
+          order.submitted_by ||
+          "Admin"
+        );
+
+      const whatsapp =
+        escapeHtml(
+          order.moderator_whatsapp ||
+          ""
+        );
+
+      const customerText =
+        escapeHtml(
+          order.order_text || ""
+        );
+
+      const images =
+        Array.isArray(
+          order.image_urls
+        )
+          ? order.image_urls
+          : [];
+
+      const firstImage =
+        images.length
+          ? escapeHtml(
+              images[0]
+            )
+          : "";
+
+      article.dataset.search =
+        (
+          orderNumber +
+          " " +
+          (order.page_name || "") +
+          " " +
+          (order.submitted_by || "") +
+          " " +
+          (order.order_text || "")
+        ).toLowerCase();
+
+
+      article.innerHTML = `
+
+        <div class="order-image">
+
+          ${
+            firstImage
+              ? `<img src="${firstImage}" alt="Order image">`
+              : `অর্ডারের ছবি`
+          }
+
+        </div>
+
+        <div class="card-body">
+
+          <div class="order-no">
+            অর্ডার নাম্বার ${escapeHtml(orderNumber)}
+          </div>
+
+          <div class="info-box">
+
+            <div class="info-item">
+              <div class="info-label">
+                Page
+              </div>
+
+              <div class="info-value">
+                🏬 ${page}
+              </div>
+            </div>
+
+            <div class="info-item">
+
+              <div class="info-label">
+                Submitted By
+              </div>
+
+              <div class="info-value">
+                👤 ${submittedBy}
+              </div>
+
+            </div>
+
+            <div class="info-item">
+
+              <div class="info-label">
+                Token Time
+              </div>
+
+              <div class="info-value">
+                🕒 ${escapeHtml(dt.time)}
+              </div>
+
+              <div class="info-value">
+                ${escapeHtml(dt.date)}
+              </div>
+
+            </div>
+
+            <div class="info-item">
+
+              <div
+                class="info-label"
+                style="text-align:center"
+              >
+                WhatsApp
+              </div>
+
+              <div class="whatsapp-mini">
+
+                ${
+                  whatsapp
+                    ? "🟢 " + whatsapp
+                    : "🟢 নম্বর যোগ করুন"
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="card-actions">
+
+            <button
+              class="action emergency"
+              type="button"
+              onclick="sendEmergency('${escapeHtml(order.id)}')"
+            >
+              🚨 Emergency
+            </button>
+
+            <button
+              class="action fraud"
+              type="button"
+            >
+              🛡 Fraud Check
+            </button>
+
+            <button
+              class="action delete"
+              type="button"
+              onclick="deleteOrder('${escapeHtml(order.id)}')"
+            >
+              🗑 Delete
+            </button>
+
+          </div>
+
+
+          <div class="call-row">
+
+            <button
+              class="call-btn"
+              type="button"
+              onclick="toggleCallStatus('${escapeHtml(order.id)}','${escapeHtml(order.call_status || "not_called")}')"
+            >
+
+              ${
+                order.call_status === "called"
+                  ? "📞 কল হয়েছে"
+                  : "📞 কল হয়নি"
+              }
+
+            </button>
+
+          </div>
+
+
+          <div class="customer">${customerText}</div>
+
+
+          <div class="quick-row">
+
+            <button
+              class="quick qwa"
+              type="button"
+            >
+              🟢 WhatsApp
+            </button>
+
+            <button
+              class="quick qcall"
+              type="button"
+            >
+              📞 Call
+            </button>
+
+            <button
+              class="quick qpending"
+              type="button"
+            >
+              Pending
+            </button>
+
+            ${
+              order.emergency
+                ? `
+                <button
+                  class="quick qemergency"
+                  type="button"
+                >
+                  🚨 Emergency
+                </button>
+                `
+                : ""
+            }
+
+          </div>
+
+        </div>
+      `;
+
+      list.appendChild(
+        article
+      );
+    }
+  );
+
+
+  searchOrders();
+}
+
+
+/* =========================
+   EMERGENCY
+========================= */
+
+async function sendEmergency(
+  orderId
+){
+
+  try{
+
+    await window
+      .OrderDatabase
+      .emergency(
+        orderId
+      );
+
+    await loadOrders();
+
+  }catch(error){
+
+    alert(
+      "Emergency করা যায়নি: " +
+      (
+        error.message ||
+        "Unknown error"
+      )
+    );
+  }
+}
+
+
+/* =========================
+   CALL STATUS
+========================= */
+
+async function toggleCallStatus(
+  orderId,
+  currentStatus
+){
+
+  const nextStatus =
+    currentStatus === "called"
+      ? "not_called"
+      : "called";
+
+  try{
+
+    await window
+      .OrderDatabase
+      .updateCall(
+        orderId,
+        nextStatus
+      );
+
+    await loadOrders();
+
+  }catch(error){
+
+    alert(
+      "Call Status পরিবর্তন হয়নি: " +
+      (
+        error.message ||
+        "Unknown error"
+      )
+    );
+  }
+}
+
+
+/* =========================
+   DELETE
+========================= */
+
+async function deleteOrder(
+  orderId
+){
+
+  const ok =
+    confirm(
+      "এই অর্ডারটি Delete করতে চান?"
+    );
+
+  if(!ok){
+    return;
+  }
+
+  try{
+
+    await window
+      .OrderDatabase
+      .delete(
+        orderId
+      );
+
+    await loadOrders();
+
+  }catch(error){
+
+    alert(
+      "Delete হয়নি: " +
+      (
+        error.message ||
+        "Unknown error"
+      )
+    );
+  }
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
 function searchOrders(){
 
   const value =
     document
-      .getElementById("searchInput")
+      .getElementById(
+        "searchInput"
+      )
       .value
       .trim()
       .toLowerCase();
 
   const cards =
-    document.querySelectorAll(".order-card");
+    document.querySelectorAll(
+      ".order-card"
+    );
 
   let visible = 0;
+
 
   cards.forEach(card=>{
 
@@ -911,25 +1216,38 @@ function searchOrders(){
       text.includes(value);
 
     card.style.display =
-      match ? "" : "none";
+      match
+        ? ""
+        : "none";
 
     if(match){
       visible++;
     }
   });
 
+
   document
-    .getElementById("emptyState")
+    .getElementById(
+      "emptyState"
+    )
     .style
     .display =
-      visible === 0 ? "block" : "none";
+      visible === 0
+        ? "block"
+        : "none";
 }
 
-/* CLEAR SEARCH */
+
+/* =========================
+   CLEAR SEARCH
+========================= */
+
 function clearSearch(){
 
   const input =
-    document.getElementById("searchInput");
+    document.getElementById(
+      "searchInput"
+    );
 
   input.value = "";
 
@@ -937,6 +1255,80 @@ function clearSearch(){
 
   input.focus();
 }
+
+
+/* =========================
+   REALTIME
+========================= */
+
+function startRealtime(){
+
+  if(
+    !window.OrderDatabase ||
+    typeof window.OrderDatabase.realtime !== "function"
+  ){
+    return;
+  }
+
+
+  window
+    .OrderDatabase
+    .realtime(
+      async payload => {
+
+        console.log(
+          "Realtime received:",
+          payload
+        );
+
+        /*
+          INSERT / UPDATE / DELETE
+          যেকোনো পরিবর্তন হলে
+          server থেকে fresh list load হবে।
+        */
+
+        await loadOrders();
+      }
+    );
+}
+
+
+/* =========================
+   START PAGE
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async ()=>{
+
+    try{
+
+      if(
+        window.OrderDatabase &&
+        typeof window.OrderDatabase.init === "function"
+      ){
+
+        window
+          .OrderDatabase
+          .init();
+      }
+
+
+      await loadOrders();
+
+      startRealtime();
+
+
+    }catch(error){
+
+      console.error(
+        "Page start error:",
+        error
+      );
+    }
+
+  }
+);
 
 </script>
 
