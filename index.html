@@ -1,1 +1,254 @@
 
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+
+  <title>অর্ডার ম্যানেজমেন্ট</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Arial,"Noto Sans Bengali",sans-serif;
+      background:#f3f4f6;
+      color:#111827;
+    }
+
+    .header{
+      background:#111827;
+      color:#fff;
+      padding:18px 15px;
+      text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.15);
+    }
+
+    .header h1{
+      font-size:22px;
+      margin-bottom:4px;
+    }
+
+    .header p{
+      font-size:12px;
+      opacity:.75;
+    }
+
+    .container{
+      max-width:600px;
+      margin:auto;
+      padding:15px;
+    }
+
+    .status{
+      background:#fff;
+      border-radius:12px;
+      padding:15px;
+      margin-bottom:15px;
+      box-shadow:0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .status-title{
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom:10px;
+    }
+
+    .status-row{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#22c55e;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:14px;
+      padding:18px 10px;
+      min-height:110px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.07);
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .card:active{
+      transform:scale(.98);
+    }
+
+    .icon{
+      font-size:27px;
+      margin-bottom:8px;
+    }
+
+    .card-title{
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .count{
+      margin-top:5px;
+      font-size:12px;
+      color:#6b7280;
+    }
+
+    .footer{
+      text-align:center;
+      color:#9ca3af;
+      font-size:11px;
+      padding:25px 10px;
+    }
+
+    @media(max-width:350px){
+      .grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <h1>অর্ডার ম্যানেজমেন্ট</h1>
+    <p>Order Management System</p>
+  </header>
+
+  <main class="container">
+
+    <section class="status">
+      <div class="status-title">System Status</div>
+
+      <div class="status-row">
+        <span class="dot"></span>
+        <span>Core System Ready</span>
+      </div>
+    </section>
+
+    <section class="grid">
+
+      <div class="card" onclick="openModule('orders')">
+        <div class="icon">📦</div>
+        <div class="card-title">All Orders</div>
+        <div class="count" id="allCount">0 Orders</div>
+      </div>
+
+      <div class="card" onclick="openModule('pending')">
+        <div class="icon">⏳</div>
+        <div class="card-title">Pending</div>
+        <div class="count" id="pendingCount">0 Orders</div>
+      </div>
+
+      <div class="card" onclick="openModule('emergency')">
+        <div class="icon">🚨</div>
+        <div class="card-title">Emergency</div>
+        <div class="count" id="emergencyCount">0 Orders</div>
+      </div>
+
+      <div class="card" onclick="openModule('submit')">
+        <div class="icon">➕</div>
+        <div class="card-title">Submit Order</div>
+        <div class="count">New Order</div>
+      </div>
+
+      <div class="card" onclick="openModule('courier')">
+        <div class="icon">🚚</div>
+        <div class="card-title">Courier</div>
+        <div class="count">Tracking & Send</div>
+      </div>
+
+      <div class="card" onclick="openModule('delete')">
+        <div class="icon">🗑️</div>
+        <div class="card-title">Delete Approval</div>
+        <div class="count" id="deleteCount">0 Request</div>
+      </div>
+
+      <div class="card" onclick="openModule('summary')">
+        <div class="icon">📊</div>
+        <div class="card-title">Summary</div>
+        <div class="count">Reports</div>
+      </div>
+
+      <div class="card" onclick="openModule('settings')">
+        <div class="icon">⚙️</div>
+        <div class="card-title">Settings</div>
+        <div class="count">Admin & Access</div>
+      </div>
+
+    </section>
+
+    <div class="footer">
+      অর্ডার ম্যানেজমেন্ট • Core 02
+    </div>
+
+  </main>
+
+  <script>
+    /*
+      ORDER MANAGEMENT 02
+      -------------------
+      Core file.
+
+      Each major module will remain separate.
+      A problem in one module can therefore be
+      repaired without rebuilding the other modules.
+    */
+
+    const MODULES = {
+      orders: "modules/orders.html",
+      pending: "modules/pending.html",
+      emergency: "modules/emergency.html",
+      submit: "modules/submit.html",
+      courier: "modules/courier.html",
+      delete: "modules/delete-approval.html",
+      summary: "modules/summary.html",
+      settings: "modules/settings.html"
+    };
+
+    function openModule(moduleName) {
+
+      const modulePath = MODULES[moduleName];
+
+      if (!modulePath) {
+        alert("Module পাওয়া যায়নি");
+        return;
+      }
+
+      window.location.href = modulePath;
+    }
+
+    function updateCount(id, number, label = "Orders") {
+      const el = document.getElementById(id);
+
+      if (el) {
+        el.textContent = number + " " + label;
+      }
+    }
+
+    console.log("Order Management 02 Core Ready");
+  </script>
+
+</body>
+</html>
