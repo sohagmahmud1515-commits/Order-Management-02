@@ -1,254 +1,539 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111827">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#087b80">
 
-  <title>অর্ডার ম্যানেজমেন্ট</title>
+<title>অর্ডার ম্যানেজমেন্ট</title>
 
-  <style>
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body{
-      font-family:Arial,"Noto Sans Bengali",sans-serif;
-      background:#f3f4f6;
-      color:#111827;
-    }
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#f4f8f7;
+  color:#182027;
+  padding-bottom:90px;
+}
 
-    .header{
-      background:#111827;
-      color:#fff;
-      padding:18px 15px;
-      text-align:center;
-      box-shadow:0 2px 8px rgba(0,0,0,.15);
-    }
+/* ===== HEADER ===== */
 
-    .header h1{
-      font-size:22px;
-      margin-bottom:4px;
-    }
+.header{
+  background:#087b80;
+  color:white;
+  min-height:95px;
+  padding:18px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
 
-    .header p{
-      font-size:12px;
-      opacity:.75;
-    }
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
 
-    .container{
-      max-width:600px;
-      margin:auto;
-      padding:15px;
-    }
+.title{
+  font-size:23px;
+  font-weight:800;
+  white-space:nowrap;
+}
 
-    .status{
-      background:#fff;
-      border-radius:12px;
-      padding:15px;
-      margin-bottom:15px;
-      box-shadow:0 2px 8px rgba(0,0,0,.06);
-    }
+.core{
+  font-size:12px;
+  font-weight:700;
+  opacity:.95;
+}
 
-    .status-title{
-      font-size:14px;
-      font-weight:bold;
-      margin-bottom:10px;
-    }
+.header-actions{
+  display:flex;
+  gap:10px;
+}
 
-    .status-row{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-size:13px;
-    }
+.header-btn{
+  width:48px;
+  height:48px;
+  border:none;
+  border-radius:12px;
+  background:rgba(255,255,255,.15);
+  color:white;
+  font-size:25px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
 
-    .dot{
-      width:10px;
-      height:10px;
-      border-radius:50%;
-      background:#22c55e;
-    }
+.header-btn:active{
+  transform:scale(.96);
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
-    }
+/* ===== GROUP AREA ===== */
 
-    .card{
-      background:#fff;
-      border-radius:14px;
-      padding:18px 10px;
-      min-height:110px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      box-shadow:0 2px 8px rgba(0,0,0,.07);
-      cursor:pointer;
-      user-select:none;
-    }
+.groups{
+  max-width:650px;
+  margin:25px auto;
+  padding:0 18px;
+}
 
-    .card:active{
-      transform:scale(.98);
-    }
+.group-card{
+  width:100%;
+  min-height:112px;
+  background:white;
+  border-radius:22px;
+  margin-bottom:18px;
+  padding:18px 20px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  border:none;
+  text-align:left;
+  box-shadow:0 7px 20px rgba(0,0,0,.07);
+  cursor:pointer;
+}
 
-    .icon{
-      font-size:27px;
-      margin-bottom:8px;
-    }
+.group-card:active{
+  transform:scale(.985);
+}
 
-    .card-title{
-      font-size:14px;
-      font-weight:bold;
-    }
+.group-icon{
+  width:70px;
+  height:70px;
+  min-width:70px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+}
 
-    .count{
-      margin-top:5px;
-      font-size:12px;
-      color:#6b7280;
-    }
+.icon-all{
+  background:#e7efff;
+}
 
-    .footer{
-      text-align:center;
-      color:#9ca3af;
-      font-size:11px;
-      padding:25px 10px;
-    }
+.icon-pending{
+  background:#fff1c6;
+}
 
-    @media(max-width:350px){
-      .grid{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
+.icon-emergency{
+  background:#ffe1e1;
+}
+
+.icon-delete{
+  background:#eee2ff;
+}
+
+.group-name{
+  flex:1;
+  font-size:21px;
+  font-weight:800;
+}
+
+.count{
+  width:55px;
+  height:55px;
+  min-width:55px;
+  border-radius:50%;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+  font-weight:800;
+}
+
+.count-all{
+  background:#2879e8;
+}
+
+.count-pending{
+  background:#f09a00;
+}
+
+.count-emergency{
+  background:#ff4049;
+}
+
+.count-delete{
+  background:#7542d8;
+}
+
+/* ===== BOTTOM NAV ===== */
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:78px;
+  background:white;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  align-items:center;
+  box-shadow:0 -3px 15px rgba(0,0,0,.08);
+  z-index:100;
+}
+
+.nav-item{
+  height:65px;
+  border:none;
+  background:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  font-size:13px;
+  font-weight:700;
+  color:#5e666b;
+  cursor:pointer;
+}
+
+.nav-item.active{
+  margin:6px 12px;
+  border-radius:15px;
+  background:#e7f6f3;
+  color:#087b80;
+}
+
+.nav-icon{
+  font-size:25px;
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:430px){
+
+  .header{
+    min-height:88px;
+    padding:15px 14px;
+  }
+
+  .title{
+    font-size:20px;
+  }
+
+  .core{
+    font-size:10px;
+  }
+
+  .header-btn{
+    width:43px;
+    height:43px;
+    font-size:22px;
+  }
+
+  .groups{
+    margin-top:20px;
+    padding:0 14px;
+  }
+
+  .group-card{
+    min-height:105px;
+    padding:15px;
+  }
+
+  .group-icon{
+    width:62px;
+    height:62px;
+    min-width:62px;
+    font-size:30px;
+  }
+
+  .group-name{
+    font-size:19px;
+  }
+
+  .count{
+    width:50px;
+    height:50px;
+    min-width:50px;
+    font-size:20px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header class="header">
-    <h1>অর্ডার ম্যানেজমেন্ট</h1>
-    <p>Order Management System</p>
-  </header>
+<!-- HEADER -->
 
-  <main class="container">
+<header class="header">
 
-    <section class="status">
-      <div class="status-title">System Status</div>
+  <div class="header-left">
+    <div class="title">অর্ডার ম্যানেজমেন্ট</div>
+    <div class="core">FINAL CORE</div>
+  </div>
 
-      <div class="status-row">
-        <span class="dot"></span>
-        <span>Core System Ready</span>
-      </div>
-    </section>
+  <div class="header-actions">
 
-    <section class="grid">
+    <button
+      class="header-btn"
+      type="button"
+      onclick="openModule('notifications')"
+      aria-label="Notifications">
+      🔔
+    </button>
 
-      <div class="card" onclick="openModule('orders')">
-        <div class="icon">📦</div>
-        <div class="card-title">All Orders</div>
-        <div class="count" id="allCount">0 Orders</div>
-      </div>
+    <button
+      class="header-btn"
+      type="button"
+      onclick="openModule('summary')"
+      aria-label="Summary">
+      📊
+    </button>
 
-      <div class="card" onclick="openModule('pending')">
-        <div class="icon">⏳</div>
-        <div class="card-title">Pending</div>
-        <div class="count" id="pendingCount">0 Orders</div>
-      </div>
+  </div>
 
-      <div class="card" onclick="openModule('emergency')">
-        <div class="icon">🚨</div>
-        <div class="card-title">Emergency</div>
-        <div class="count" id="emergencyCount">0 Orders</div>
-      </div>
+</header>
 
-      <div class="card" onclick="openModule('submit')">
-        <div class="icon">➕</div>
-        <div class="card-title">Submit Order</div>
-        <div class="count">New Order</div>
-      </div>
 
-      <div class="card" onclick="openModule('courier')">
-        <div class="icon">🚚</div>
-        <div class="card-title">Courier</div>
-        <div class="count">Tracking & Send</div>
-      </div>
+<!-- GROUP LIST -->
 
-      <div class="card" onclick="openModule('delete')">
-        <div class="icon">🗑️</div>
-        <div class="card-title">Delete Approval</div>
-        <div class="count" id="deleteCount">0 Request</div>
-      </div>
+<main class="groups">
 
-      <div class="card" onclick="openModule('summary')">
-        <div class="icon">📊</div>
-        <div class="card-title">Summary</div>
-        <div class="count">Reports</div>
-      </div>
+  <button
+    class="group-card"
+    type="button"
+    onclick="openModule('orders')">
 
-      <div class="card" onclick="openModule('settings')">
-        <div class="icon">⚙️</div>
-        <div class="card-title">Settings</div>
-        <div class="count">Admin & Access</div>
-      </div>
+    <div class="group-icon icon-all">📦</div>
 
-    </section>
-
-    <div class="footer">
-      অর্ডার ম্যানেজমেন্ট • Core 02
+    <div class="group-name">
+      All Order Group
     </div>
 
-  </main>
+    <div
+      class="count count-all"
+      id="allCount">
+      0
+    </div>
 
-  <script>
-    /*
-      ORDER MANAGEMENT 02
-      -------------------
-      Core file.
+  </button>
 
-      Each major module will remain separate.
-      A problem in one module can therefore be
-      repaired without rebuilding the other modules.
-    */
 
-    const MODULES = {
-      orders: "modules/orders.html",
-      pending: "modules/pending.html",
-      emergency: "modules/emergency.html",
-      submit: "modules/submit.html",
-      courier: "modules/courier.html",
-      delete: "modules/delete-approval.html",
-      summary: "modules/summary.html",
-      settings: "modules/settings.html"
-    };
+  <button
+    class="group-card"
+    type="button"
+    onclick="openModule('pending')">
 
-    function openModule(moduleName) {
+    <div class="group-icon icon-pending">🕐</div>
 
-      const modulePath = MODULES[moduleName];
+    <div class="group-name">
+      Pending Group
+    </div>
 
-      if (!modulePath) {
-        alert("Module পাওয়া যায়নি");
-        return;
-      }
+    <div
+      class="count count-pending"
+      id="pendingCount">
+      0
+    </div>
 
-      window.location.href = modulePath;
-    }
+  </button>
 
-    function updateCount(id, number, label = "Orders") {
-      const el = document.getElementById(id);
 
-      if (el) {
-        el.textContent = number + " " + label;
-      }
-    }
+  <button
+    class="group-card"
+    type="button"
+    onclick="openModule('emergency')">
 
-    console.log("Order Management 02 Core Ready");
-  </script>
+    <div class="group-icon icon-emergency">🚨</div>
+
+    <div class="group-name">
+      Emergency Group
+    </div>
+
+    <div
+      class="count count-emergency"
+      id="emergencyCount">
+      0
+    </div>
+
+  </button>
+
+
+  <button
+    class="group-card"
+    type="button"
+    onclick="openModule('delete')">
+
+    <div class="group-icon icon-delete">🗑️</div>
+
+    <div class="group-name">
+      Delete Approval
+    </div>
+
+    <div
+      class="count count-delete"
+      id="deleteCount">
+      0
+    </div>
+
+  </button>
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+  <button
+    class="nav-item active"
+    type="button"
+    onclick="goHome()">
+
+    <span class="nav-icon">📦</span>
+    <span>Orders</span>
+
+  </button>
+
+
+  <button
+    class="nav-item"
+    type="button"
+    onclick="openModule('courier')">
+
+    <span class="nav-icon">🚚</span>
+    <span>Courier</span>
+
+  </button>
+
+
+  <button
+    class="nav-item"
+    type="button"
+    onclick="openModule('settings')">
+
+    <span class="nav-icon">⚙️</span>
+    <span>Settings</span>
+
+  </button>
+
+</nav>
+
+
+<script>
+
+/*
+================================================
+ORDER MANAGEMENT 02
+FINAL CORE / HOME
+================================================
+
+HOME = index.html
+
+Other systems remain separate modules.
+This allows one module to be updated without
+changing the other working modules.
+*/
+
+
+const MODULES = {
+
+  orders:
+    "modules/orders.html",
+
+  pending:
+    "modules/pending.html",
+
+  emergency:
+    "modules/emergency.html",
+
+  delete:
+    "modules/delete-approval.html",
+
+  courier:
+    "modules/courier.html",
+
+  settings:
+    "modules/settings.html",
+
+  summary:
+    "modules/summary.html",
+
+  notifications:
+    "modules/notifications.html"
+
+};
+
+
+/* OPEN MODULE */
+
+function openModule(name){
+
+  const path = MODULES[name];
+
+  if(!path){
+    alert("Module পাওয়া যায়নি");
+    return;
+  }
+
+  window.location.href = path;
+}
+
+
+/* HOME */
+
+function goHome(){
+  window.location.href = "index.html";
+}
+
+
+/* UPDATE COUNTS */
+
+function setGroupCounts(data = {}){
+
+  document.getElementById("allCount").textContent =
+    data.all ?? 0;
+
+  document.getElementById("pendingCount").textContent =
+    data.pending ?? 0;
+
+  document.getElementById("emergencyCount").textContent =
+    data.emergency ?? 0;
+
+  document.getElementById("deleteCount").textContent =
+    data.delete ?? 0;
+}
+
+
+/*
+Later the Database module will supply
+the real-time counts here.
+
+Example:
+
+setGroupCounts({
+  all: 12,
+  pending: 5,
+  emergency: 2,
+  delete: 1
+});
+
+*/
+
+
+setGroupCounts({
+  all:0,
+  pending:0,
+  emergency:0,
+  delete:0
+});
+
+
+console.log(
+  "Order Management 02 - Final Core Ready"
+);
+
+</script>
 
 </body>
 </html>
