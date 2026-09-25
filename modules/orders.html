@@ -1,757 +1,950 @@
-/* =========================================================
-   ORDER MANAGEMENT 02
-   DATABASE MODULE — FINAL
-   Supabase + Storage + Realtime
-========================================================= */
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f83">
 
-const DB_CONFIG = {
-  supabaseUrl: "https://wcjzugrizxdxafyzexrr.supabase.co",
-  supabaseAnonKey: "sb_publishable_ZpSiNbSCaGVuYKs8rZ8BKw_2PpZrxRP",
+<title>All Order Group</title>
 
-  ordersTable: "orders",
-  storageBucket: "order-images"
-};
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-let dbClient = null;
-let realtimeChannel = null;
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#f4f8f7;
+  color:#17202a;
+  padding-bottom:85px;
+}
+
+.header{
+  height:72px;
+  background:#087f83;
+  color:#fff;
+  padding:0 15px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.back{
+  width:40px;
+  height:40px;
+  border:0;
+  border-radius:10px;
+  background:rgba(255,255,255,.15);
+  color:white;
+  font-size:22px;
+}
+
+.header-title{
+  font-size:20px;
+  font-weight:800;
+}
+
+.container{
+  max-width:650px;
+  margin:auto;
+  padding:14px;
+}
+
+.search{
+  width:100%;
+  height:48px;
+  border:1px solid #d7e1df;
+  border-radius:13px;
+  padding:0 14px;
+  font-size:16px;
+  outline:none;
+  background:white;
+  margin-bottom:12px;
+}
+
+.submit-card{
+  background:white;
+  border-radius:17px;
+  padding:14px;
+  margin-bottom:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+.submit-title{
+  font-size:17px;
+  font-weight:800;
+  color:#087f83;
+  margin-bottom:12px;
+}
+
+.field{
+  margin-bottom:12px;
+}
+
+.label{
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+select,
+textarea{
+  width:100%;
+  border:1px solid #d7e1df;
+  border-radius:12px;
+  background:white;
+  font-size:16px;
+  outline:none;
+}
+
+select{
+  height:48px;
+  padding:0 12px;
+}
+
+textarea{
+  min-height:145px;
+  padding:12px;
+  resize:vertical;
+  line-height:1.5;
+}
+
+.upload-box{
+  border:2px dashed #b8cfcb;
+  border-radius:13px;
+  padding:14px;
+  text-align:center;
+  background:#f9fcfb;
+}
+
+.upload-box input{
+  width:100%;
+}
+
+.hint{
+  font-size:12px;
+  color:#687473;
+  margin-top:6px;
+}
+
+.preview{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+  margin-top:10px;
+}
+
+.preview-item{
+  position:relative;
+  aspect-ratio:1/1;
+}
+
+.preview-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:9px;
+}
+
+.remove-image{
+  position:absolute;
+  right:-4px;
+  top:-4px;
+  width:23px;
+  height:23px;
+  border:0;
+  border-radius:50%;
+  background:#e53935;
+  color:white;
+  font-weight:bold;
+}
+
+.submit-btn{
+  width:100%;
+  height:50px;
+  border:0;
+  border-radius:13px;
+  background:#087f83;
+  color:white;
+  font-size:17px;
+  font-weight:800;
+}
+
+.submit-btn:disabled{
+  opacity:.6;
+}
+
+.status{
+  margin-top:10px;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.5;
+  white-space:pre-line;
+}
+
+.orders-title{
+  font-size:17px;
+  font-weight:800;
+  margin:4px 2px 10px;
+}
+
+.order-card{
+  background:white;
+  border-radius:16px;
+  padding:13px;
+  margin-bottom:12px;
+  box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.order-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:flex-start;
+  margin-bottom:9px;
+}
+
+.order-number{
+  font-size:15px;
+  font-weight:800;
+}
+
+.page-badge{
+  background:#e4f4f1;
+  color:#087f83;
+  padding:5px 8px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.order-images{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+  margin-bottom:9px;
+}
+
+.order-images img{
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.order-text{
+  white-space:pre-wrap;
+  line-height:1.5;
+  font-size:14px;
+  overflow-wrap:anywhere;
+}
+
+.meta{
+  border-top:1px solid #edf1f0;
+  margin-top:10px;
+  padding-top:8px;
+  font-size:12px;
+  color:#687473;
+  line-height:1.5;
+}
+
+.empty{
+  text-align:center;
+  padding:30px 10px;
+  color:#75807e;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:72px;
+  background:white;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  box-shadow:0 -3px 12px rgba(0,0,0,.06);
+  z-index:60;
+}
+
+.nav-btn{
+  border:0;
+  background:white;
+  font-size:13px;
+  font-weight:700;
+  color:#5e6867;
+}
+
+.nav-btn.active{
+  color:#087f83;
+  background:#e8f6f3;
+}
+
+.nav-icon{
+  display:block;
+  font-size:23px;
+  margin-bottom:2px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <button class="back" onclick="goHome()">‹</button>
+  <div class="header-title">All Order Group</div>
+</header>
+
+<main class="container">
+
+  <input
+    id="searchInput"
+    class="search"
+    type="search"
+    placeholder="নাম / মোবাইল / লোকেশন / Order No. দিয়ে Search"
+  >
+
+  <section class="submit-card">
+
+    <div class="submit-title">
+      নতুন অর্ডার সাবমিট
+    </div>
+
+    <div class="field">
+      <label class="label">Page</label>
+
+      <select id="pageSelect">
+        <option value="">পেজ সিলেক্ট করুন</option>
+        <option value="Sehzadi online shop">Sehzadi online shop</option>
+        <option value="Abaya House">Abaya House</option>
+        <option value="Maya Borka House">Maya Borka House</option>
+        <option value="Mahira Fashion">Mahira Fashion</option>
+        <option value="Black Beauty Abaya">Black Beauty Abaya</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="label">
+        ছবি
+      </label>
+
+      <div class="upload-box">
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/*"
+          multiple
+        >
+
+        <div class="hint">
+          কমপক্ষে ১টি, সর্বোচ্চ ৭টি ছবি
+        </div>
+
+        <div
+          id="imagePreview"
+          class="preview">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">
+        কাস্টমারের সম্পূর্ণ অর্ডার
+      </label>
+
+      <textarea
+        id="orderText"
+        placeholder="নাম, মোবাইল নাম্বার, ঠিকানা, লং/সাইজ, কালার, পরিমাণ, নোট—সব এখানে লিখুন"></textarea>
+    </div>
+
+    <button
+      id="submitBtn"
+      class="submit-btn"
+      type="button">
+      অর্ডার সাবমিট
+    </button>
+
+    <div
+      id="statusBox"
+      class="status">
+    </div>
+
+  </section>
 
 
-/* =========================
-   INITIALIZE DATABASE
-========================= */
+  <div class="orders-title">
+    All Orders
+  </div>
 
-function initDatabase() {
+  <div id="orderList">
+    <div class="empty">
+      Loading...
+    </div>
+  </div>
 
-  if (!window.supabase) {
-    console.error("Supabase library পাওয়া যায়নি।");
-    return false;
-  }
+</main>
 
-  if (dbClient) return true;
 
-  try {
+<nav class="bottom-nav">
 
-    dbClient = window.supabase.createClient(
-      DB_CONFIG.supabaseUrl,
-      DB_CONFIG.supabaseAnonKey
-    );
+  <button
+    class="nav-btn active"
+    onclick="goHome()">
+    <span class="nav-icon">📦</span>
+    Orders
+  </button>
 
-    console.log("Supabase connected.");
-    return true;
+  <button
+    class="nav-btn"
+    onclick="goCourier()">
+    <span class="nav-icon">🚚</span>
+    Courier
+  </button>
 
-  } catch (error) {
+  <button
+    class="nav-btn"
+    onclick="goSettings()">
+    <span class="nav-icon">⚙️</span>
+    Settings
+  </button>
 
-    console.error("Supabase connection error:", error);
-    return false;
-  }
+</nav>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./database.js"></script>
+
+<script>
+let selectedImages = [];
+let allOrders = [];
+
+const imageInput =
+  document.getElementById("imageInput");
+
+const imagePreview =
+  document.getElementById("imagePreview");
+
+const submitBtn =
+  document.getElementById("submitBtn");
+
+const statusBox =
+  document.getElementById("statusBox");
+
+const searchInput =
+  document.getElementById("searchInput");
+
+
+function goHome(){
+  window.location.href = "../index.html";
+}
+
+function goCourier(){
+  window.location.href = "./courier.html";
+}
+
+function goSettings(){
+  window.location.href = "./settings.html";
 }
 
 
-/* =========================
-   CREATE UNIQUE ID
-========================= */
+/* IMAGE SELECT */
 
-function createOrderId() {
+imageInput.addEventListener(
+  "change",
+  function(){
 
-  if (
-    window.crypto &&
-    typeof window.crypto.randomUUID === "function"
-  ) {
-    return window.crypto.randomUUID();
+    const incoming =
+      Array.from(this.files || []);
+
+    if(!incoming.length){
+      return;
+    }
+
+    const remaining =
+      7 - selectedImages.length;
+
+    if(remaining <= 0){
+      alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
+      this.value = "";
+      return;
+    }
+
+    if(incoming.length > remaining){
+      alert("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
+    }
+
+    selectedImages.push(
+      ...incoming.slice(0, remaining)
+    );
+
+    this.value = "";
+
+    renderPreview();
   }
+);
 
-  return (
-    Date.now().toString(36) +
-    "-" +
-    Math.random().toString(36).slice(2) +
-    "-" +
-    Math.random().toString(36).slice(2)
+
+function renderPreview(){
+
+  imagePreview.innerHTML = "";
+
+  selectedImages.forEach(
+    function(file,index){
+
+      const item =
+        document.createElement("div");
+
+      item.className =
+        "preview-item";
+
+      const img =
+        document.createElement("img");
+
+      const url =
+        URL.createObjectURL(file);
+
+      img.src = url;
+
+      img.onload = function(){
+        URL.revokeObjectURL(url);
+      };
+
+      const remove =
+        document.createElement("button");
+
+      remove.type = "button";
+      remove.className = "remove-image";
+      remove.textContent = "×";
+
+      remove.onclick = function(){
+
+        selectedImages.splice(
+          index,
+          1
+        );
+
+        renderPreview();
+      };
+
+      item.appendChild(img);
+      item.appendChild(remove);
+
+      imagePreview.appendChild(item);
+    }
   );
 }
 
 
-/* =========================
-   IMAGE UPLOAD
-========================= */
+/* SUBMIT */
 
-async function uploadOrderImages(files, orderId) {
+submitBtn.addEventListener(
+  "click",
+  submitOrder
+);
 
-  if (!dbClient && !initDatabase()) {
-    throw new Error("Database connect হয়নি।");
+
+async function submitOrder(){
+
+  const page =
+    document
+      .getElementById("pageSelect")
+      .value
+      .trim();
+
+  const text =
+    document
+      .getElementById("orderText")
+      .value
+      .trim();
+
+  if(!page){
+    alert("পেজ সিলেক্ট করুন।");
+    return;
   }
 
-  if (!files || files.length < 1) {
-    throw new Error("অন্তত ১টি ছবি দিন।");
+  if(selectedImages.length < 1){
+    alert("অন্তত ১টি ছবি দিন।");
+    return;
   }
 
-  if (files.length > 7) {
-    throw new Error("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
+  if(!text){
+    alert("কাস্টমারের সম্পূর্ণ অর্ডার লিখুন।");
+    return;
   }
 
-  const urls = [];
+  /*
+    database.js অর্ডারের সম্পূর্ণ লেখা থেকে
+    ১১ সংখ্যার English মোবাইল নাম্বার বের করবে।
+  */
 
-  for (let i = 0; i < files.length; i++) {
+  if(!/01\d{9}/.test(text)){
+    alert(
+      "অর্ডারের মধ্যে ১১ সংখ্যার English মোবাইল নাম্বার দিন।\nযেমন: 01712345678"
+    );
+    return;
+  }
 
-    const file = files[i];
+  submitBtn.disabled = true;
+  submitBtn.textContent =
+    "সাবমিট হচ্ছে...";
 
-    if (!file) continue;
+  statusBox.textContent =
+    "অর্ডার Save হচ্ছে...";
 
-    if (
-      file.type &&
-      !file.type.startsWith("image/")
-    ) {
-      throw new Error("শুধু ছবির ফাইল দেওয়া যাবে।");
-    }
+  try{
 
-    let extension = "jpg";
-
-    if (file.name && file.name.includes(".")) {
-
-      extension =
-        file.name
-          .split(".")
-          .pop()
-          .replace(/[^a-zA-Z0-9]/g, "")
-          .toLowerCase() || "jpg";
-    }
-
-    const uniquePart =
-      Date.now() +
-      "-" +
-      Math.random().toString(36).slice(2, 10);
-
-    const filePath =
-      `${orderId}/${uniquePart}-${i}.${extension}`;
-
-    const { error: uploadError } =
-      await dbClient
-        .storage
-        .from(DB_CONFIG.storageBucket)
-        .upload(
-          filePath,
-          file,
-          {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: file.type || undefined
-          }
-        );
-
-    if (uploadError) {
-
-      console.error("Image upload error:", uploadError);
-
+    if(
+      !window.OrderDatabase ||
+      typeof window.OrderDatabase.save !== "function"
+    ){
       throw new Error(
-        "ছবি Upload হয়নি: " +
-        uploadError.message
+        "Database module load হয়নি।"
       );
     }
 
-    const { data } =
-      dbClient
-        .storage
-        .from(DB_CONFIG.storageBucket)
-        .getPublicUrl(filePath);
+    await window.OrderDatabase.save({
+      page: page,
 
-    if (!data || !data.publicUrl) {
-      throw new Error("ছবির URL পাওয়া যায়নি।");
+      /*
+        দুটো নামই পাঠানো হচ্ছে,
+        তাই পুরোনো/নতুন database.js উভয়ের
+        সঙ্গে compatibility থাকবে।
+      */
+      orderText: text,
+      customerText: text,
+
+      images: selectedImages,
+
+      submittedBy: "Admin",
+
+      moderatorWhatsapp: ""
+    });
+
+    statusBox.textContent =
+      "✓ অর্ডার সফলভাবে Save হয়েছে।";
+
+    document
+      .getElementById("orderText")
+      .value = "";
+
+    selectedImages = [];
+    imagePreview.innerHTML = "";
+
+    await loadOrders();
+
+  }catch(error){
+
+    console.error(error);
+
+    statusBox.textContent =
+      "✕ " +
+      (
+        error &&
+        error.message
+          ? error.message
+          : "অর্ডার Save হয়নি।"
+      );
+
+    alert(statusBox.textContent);
+
+  }finally{
+
+    submitBtn.disabled = false;
+
+    submitBtn.textContent =
+      "অর্ডার সাবমিট";
+  }
+}
+
+
+/* LOAD ORDERS */
+
+async function loadOrders(){
+
+  const list =
+    document.getElementById("orderList");
+
+  try{
+
+    if(
+      !window.OrderDatabase ||
+      typeof window.OrderDatabase.loadAll !== "function"
+    ){
+      throw new Error(
+        "Database module load হয়নি।"
+      );
     }
 
-    urls.push(data.publicUrl);
-  }
+    allOrders =
+      await window.OrderDatabase.loadAll();
 
-  if (!urls.length) {
-    throw new Error("কোনো ছবি Upload হয়নি।");
-  }
+    renderOrders(
+      allOrders
+    );
 
-  return urls;
+  }catch(error){
+
+    console.error(error);
+
+    list.innerHTML =
+      '<div class="empty">' +
+      escapeHtml(
+        error.message ||
+        "অর্ডার Load হয়নি।"
+      ) +
+      "</div>";
+  }
 }
 
 
-/* =========================
-   SAVE ORDER
-========================= */
+/* SEARCH */
 
-async function saveOrderToDatabase({
-  page,
-  customerText,
-  phone,
-  images,
-  submittedBy = "Admin",
-  moderatorWhatsapp = ""
-}) {
+searchInput.addEventListener(
+  "input",
+  function(){
 
-  if (!dbClient && !initDatabase()) {
-    throw new Error("Database connect হয়নি।");
-  }
+    const query =
+      this.value
+        .trim()
+        .toLowerCase();
 
-  page = String(page || "").trim();
-  customerText = String(customerText || "").trim();
-  phone = String(phone || "").trim();
+    if(!query){
 
-  if (!page) {
-    throw new Error("পেজ সিলেক্ট করুন।");
-  }
-
-  if (!customerText) {
-    throw new Error("কাস্টমারের অর্ডারের তথ্য দিন।");
-  }
-
-  /*
-    Bangladesh mobile:
-    English digits only
-    01XXXXXXXXX = 11 digits
-  */
-
-  if (!/^01\d{9}$/.test(phone)) {
-    throw new Error(
-      "সঠিক ১১ সংখ্যার মোবাইল নাম্বার দিন। উদাহরণ: 01712345678"
-    );
-  }
-
-  if (!images || images.length < 1) {
-    throw new Error("অন্তত ১টি ছবি দিন।");
-  }
-
-  if (images.length > 7) {
-    throw new Error("সর্বোচ্চ ৭টি ছবি দেওয়া যাবে।");
-  }
-
-  const orderId = createOrderId();
-
-  /*
-    প্রথমে ছবি Storage-এ যাবে।
-  */
-
-  const imageUrls =
-    await uploadOrderImages(
-      images,
-      orderId
-    );
-
-  const now = new Date().toISOString();
-
-  /*
-    এই field-গুলো এখন Supabase table-এর
-    column-এর সাথে সরাসরি মিলছে।
-  */
-
-  const orderData = {
-
-    id: orderId,
-
-    page_name: page,
-
-    customer_text: customerText,
-
-    phone: phone,
-
-    images: imageUrls,
-
-    submitted_by:
-      submittedBy || "Admin",
-
-    moderator_whatsapp:
-      moderatorWhatsapp || "",
-
-    status: "pending",
-
-    emergency: false,
-
-    courier_sent: false,
-
-    call_status: "not_called",
-
-    created_at: now,
-
-    updated_at: now
-  };
-
-  const {
-    data,
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .insert(orderData)
-      .select()
-      .single();
-
-  if (error) {
-
-    console.error("Order save error:", error);
-
-    throw new Error(
-      "অর্ডার Save হয়নি: " +
-      error.message
-    );
-  }
-
-  console.log("Order saved:", data);
-
-  return data;
-}
-
-
-/* =========================
-   LOAD ALL
-========================= */
-
-async function loadAllOrders() {
-
-  if (!dbClient && !initDatabase()) {
-    return [];
-  }
-
-  const {
-    data,
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .select("*")
-      .order(
-        "created_at",
-        { ascending: false }
+      renderOrders(
+        allOrders
       );
 
-  if (error) {
-    console.error("Load All error:", error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-
-/* =========================
-   LOAD PENDING
-========================= */
-
-async function loadPendingOrders() {
-
-  if (!dbClient && !initDatabase()) {
-    return [];
-  }
-
-  const {
-    data,
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .select("*")
-      .eq("status", "pending")
-      .eq("emergency", false)
-      .order(
-        "created_at",
-        { ascending: true }
-      );
-
-  if (error) {
-    console.error("Pending load error:", error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-
-/* =========================
-   LOAD EMERGENCY
-========================= */
-
-async function loadEmergencyOrders() {
-
-  if (!dbClient && !initDatabase()) {
-    return [];
-  }
-
-  const {
-    data,
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .select("*")
-      .eq("emergency", true)
-      .order(
-        "created_at",
-        { ascending: true }
-      );
-
-  if (error) throw error;
-
-  return data || [];
-}
-
-
-/* =========================
-   EMERGENCY
-========================= */
-
-async function moveOrderToEmergency(orderId) {
-
-  if (!dbClient && !initDatabase()) {
-    throw new Error("Database connect হয়নি।");
-  }
-
-  const {
-    data,
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .update({
-        emergency: true,
-        updated_at: new Date().toISOString()
-      })
-      .eq("id", orderId)
-      .select()
-      .single();
-
-  if (error) throw error;
-
-  return data;
-}
-
-
-/* =========================
-   REMOVE EMERGENCY
-========================= */
-
-async function removeEmergency(orderId) {
-
-  if (!dbClient && !initDatabase()) {
-    throw new Error("Database connect হয়নি।");
-  }
-
-  const {
-    data,
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .update({
-        emergency: false,
-        updated_at: new Date().toISOString()
-      })
-      .eq("id", orderId)
-      .select()
-      .single();
-
-  if (error) throw error;
-
-  return data;
-}
-
-
-/* =========================
-   CALL STATUS
-========================= */
-
-async function updateCallStatus(
-  orderId,
-  status
-) {
-
-  if (!dbClient && !initDatabase()) {
-    throw new Error("Database connect হয়নি।");
-  }
-
-  const now = new Date().toISOString();
-
-  const {
-    data,
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .update({
-        call_status: status,
-        call_updated_at: now,
-        updated_at: now
-      })
-      .eq("id", orderId)
-      .select()
-      .single();
-
-  if (error) throw error;
-
-  return data;
-}
-
-
-/* =========================
-   UPDATE ORDER
-========================= */
-
-async function updateOrder(
-  orderId,
-  changes
-) {
-
-  if (!dbClient && !initDatabase()) {
-    throw new Error("Database connect হয়নি।");
-  }
-
-  const allowed = {};
-
-  if ("page_name" in changes)
-    allowed.page_name = changes.page_name;
-
-  if ("customer_text" in changes)
-    allowed.customer_text = changes.customer_text;
-
-  if ("phone" in changes)
-    allowed.phone = changes.phone;
-
-  if ("images" in changes)
-    allowed.images = changes.images;
-
-  if ("status" in changes)
-    allowed.status = changes.status;
-
-  if ("emergency" in changes)
-    allowed.emergency = changes.emergency;
-
-  if ("courier_sent" in changes)
-    allowed.courier_sent = changes.courier_sent;
-
-  if ("call_status" in changes)
-    allowed.call_status = changes.call_status;
-
-  allowed.updated_at =
-    new Date().toISOString();
-
-  const {
-    data,
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .update(allowed)
-      .eq("id", orderId)
-      .select()
-      .single();
-
-  if (error) throw error;
-
-  return data;
-}
-
-
-/* =========================
-   DELETE
-========================= */
-
-async function deleteOrderFromDatabase(
-  orderId
-) {
-
-  if (!dbClient && !initDatabase()) {
-    throw new Error("Database connect হয়নি।");
-  }
-
-  const {
-    error
-  } =
-    await dbClient
-      .from(DB_CONFIG.ordersTable)
-      .delete()
-      .eq("id", orderId);
-
-  if (error) throw error;
-
-  return true;
-}
-
-
-/* =========================
-   REALTIME
-========================= */
-
-function startOrderRealtime(callback) {
-
-  if (!dbClient && !initDatabase()) {
-    return null;
-  }
-
-  if (realtimeChannel) {
-
-    dbClient.removeChannel(
-      realtimeChannel
-    );
-
-    realtimeChannel = null;
-  }
-
-  realtimeChannel =
-    dbClient
-      .channel(
-        "order-management-orders-realtime"
-      )
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: DB_CONFIG.ordersTable
-        },
-        payload => {
-
-          console.log(
-            "Realtime change:",
-            payload
-          );
-
-          if (
-            typeof callback === "function"
-          ) {
-            callback(payload);
-          }
+      return;
+    }
+
+    const filtered =
+      allOrders.filter(
+        function(order){
+
+          const text = [
+            order.order_no,
+            order.page_name,
+            order.customer_text,
+            order.order_text,
+            order.phone,
+            order.submitted_by
+          ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+          return text.includes(query);
         }
-      )
-      .subscribe(status => {
+      );
 
-        console.log(
-          "Realtime status:",
-          status
-        );
-      });
+    renderOrders(filtered);
+  }
+);
 
-  return realtimeChannel;
+
+/* RENDER */
+
+function renderOrders(orders){
+
+  const list =
+    document.getElementById("orderList");
+
+  if(!orders || !orders.length){
+
+    list.innerHTML =
+      '<div class="empty">কোনো অর্ডার নেই।</div>';
+
+    return;
+  }
+
+  list.innerHTML =
+    orders
+      .map(createOrderCard)
+      .join("");
 }
 
 
-/* =========================
-   STOP REALTIME
-========================= */
+function createOrderCard(order){
 
-function stopOrderRealtime() {
+  const text =
+    order.customer_text ||
+    order.order_text ||
+    "";
 
-  if (
-    dbClient &&
-    realtimeChannel
-  ) {
+  let images = [];
 
-    dbClient.removeChannel(
-      realtimeChannel
+  if(Array.isArray(order.images)){
+    images = order.images;
+  }
+  else if(Array.isArray(order.image_urls)){
+    images = order.image_urls;
+  }
+
+  const orderNumber =
+    order.order_no ||
+    String(order.id || "")
+      .slice(0,8)
+      .toUpperCase();
+
+  const date =
+    formatDateTime(
+      order.created_at
     );
 
-    realtimeChannel = null;
+  const imagesHtml =
+    images.length
+      ? (
+          '<div class="order-images">' +
+          images
+            .map(
+              url =>
+                '<img src="' +
+                escapeAttribute(url) +
+                '" loading="lazy" alt="Order image">'
+            )
+            .join("") +
+          "</div>"
+        )
+      : "";
+
+  return `
+    <article class="order-card">
+
+      <div class="order-top">
+
+        <div class="order-number">
+          Order #${escapeHtml(orderNumber)}
+        </div>
+
+        <div class="page-badge">
+          ${escapeHtml(order.page_name || "")}
+        </div>
+
+      </div>
+
+      ${imagesHtml}
+
+      <div class="order-text">${escapeHtml(text)}</div>
+
+      <div class="meta">
+        Submitted By:
+        ${escapeHtml(order.submitted_by || "Admin")}
+        <br>
+        ${escapeHtml(date)}
+      </div>
+
+    </article>
+  `;
+}
+
+
+/* DATE TIME */
+
+function formatDateTime(value){
+
+  if(!value){
+    return "";
+  }
+
+  const date =
+    new Date(value);
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+    return "";
+  }
+
+  return date.toLocaleString(
+    "en-BD",
+    {
+      year:"numeric",
+      month:"2-digit",
+      day:"2-digit",
+      hour:"numeric",
+      minute:"2-digit",
+      hour12:true
+    }
+  );
+}
+
+
+/* SAFE HTML */
+
+function escapeHtml(value){
+
+  return String(
+    value ?? ""
+  )
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+}
+
+
+function escapeAttribute(value){
+  return escapeHtml(value);
+}
+
+
+/* REALTIME */
+
+function startRealtime(){
+
+  if(
+    window.OrderDatabase &&
+    typeof window.OrderDatabase.realtime === "function"
+  ){
+
+    window.OrderDatabase.realtime(
+      function(){
+
+        loadOrders();
+
+      }
+    );
   }
 }
 
 
-/* =========================
-   TEST
-========================= */
-
-async function testDatabaseConnection() {
-
-  if (!dbClient && !initDatabase()) {
-
-    return {
-      success: false,
-      message: "Database connect হয়নি।"
-    };
-  }
-
-  try {
-
-    const {
-      error
-    } =
-      await dbClient
-        .from(DB_CONFIG.ordersTable)
-        .select(
-          "id",
-          {
-            head: true,
-            count: "exact"
-          }
-        );
-
-    if (error) throw error;
-
-    return {
-      success: true,
-      message: "Database connection OK"
-    };
-
-  } catch (error) {
-
-    return {
-      success: false,
-      message:
-        error.message || "Unknown error"
-    };
-  }
-}
-
-
-/* =========================
-   EXPORT
-========================= */
-
-window.OrderDatabase = {
-
-  init: initDatabase,
-
-  test: testDatabaseConnection,
-
-  uploadImages:
-    uploadOrderImages,
-
-  save:
-    saveOrderToDatabase,
-
-  loadAll:
-    loadAllOrders,
-
-  loadPending:
-    loadPendingOrders,
-
-  loadEmergency:
-    loadEmergencyOrders,
-
-  emergency:
-    moveOrderToEmergency,
-
-  removeEmergency:
-    removeEmergency,
-
-  updateCall:
-    updateCallStatus,
-
-  update:
-    updateOrder,
-
-  delete:
-    deleteOrderFromDatabase,
-
-  realtime:
-    startOrderRealtime,
-
-  stopRealtime:
-    stopOrderRealtime
-};
-
-
-/* =========================
-   AUTO START
-========================= */
+/* START */
 
 document.addEventListener(
   "DOMContentLoaded",
-  () => {
+  async function(){
 
-    if (initDatabase()) {
+    try{
 
-      console.log(
-        "ORDER MANAGEMENT 02 DATABASE READY"
-      );
+      if(
+        window.OrderDatabase &&
+        typeof window.OrderDatabase.init === "function"
+      ){
+        window.OrderDatabase.init();
+      }
+
+      await loadOrders();
+
+      startRealtime();
+
+    }catch(error){
+
+      console.error(error);
     }
+
   }
 );
+
+</script>
+
+</body>
+</html>
